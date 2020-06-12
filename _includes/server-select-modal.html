@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="serverSelectLabel">Select Server</h5>
+          <h5 class="modal-title" id="serverSelectLabel">Server Selection</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -50,45 +50,45 @@
     </div>
   </div>
   <script>
-        function svbuttonTrigger() {$(function() {
-
-$('.server-list-group-item').on('click', function() {
-    $('.collapse').not($(this).parents('')).collapse('hide');
-
-    //$(this).not($(this).parents('')).find('.fa-arrow-alt-circle-down').addClass('fa-arrow-alt-circle-right').removeClass('fa-arrow-alt-circle-down');
-    //$(this).parents('.server-list-group').toggleClass('fa-arrow-alt-circle-down')
-    
-
-    $('.fa-arrow-alt-circle-down').addClass('fa-arrow-alt-circle-right').removeClass('fa-arrow-alt-circle-down');
-    
-    $('.fas', this)
-    .toggleClass('fa-arrow-alt-circle-right')
-    .toggleClass('fa-arrow-alt-circle-down');
-    
-});
-});
-$(function() {
-  $('.lgserver').on('click', function() {
-      console.log("oldu")
-    $('.lgserver').removeClass('list-group-item-info')
-    $(this)
-    .toggleClass('list-group-item-info')
-    .toggleClass('');
-});
-});
+function svButtonLoadSave(itemId) {
+    $('.collapse').not($('#'+itemId).parents()).collapse('hide')
+    $('#'+itemId).parents().collapse('show')
+    $('#'+itemId).addClass('list-group-item-info')
 }
-  </script>
-  <script>
-    function lgListLoad(data,depth) {
-      var curIndex=1
+function svbuttonTrigger() {
+    $(function() {
+        $('.server-list-group-item').on('click', function() {
+            $('.collapse').not($(this).parents('')).collapse('hide');
+            $('.fa-arrow-alt-circle-down').addClass('fa-arrow-alt-circle-right').removeClass('fa-arrow-alt-circle-down');
+            $('.fas', this)
+                .toggleClass('fa-arrow-alt-circle-right')
+                .toggleClass('fa-arrow-alt-circle-down');
+        });
+    });
+    $(function() {
+        $('.lgserver').on('click', function() {
+            $('.lgserver').removeClass('list-group-item-info')
+            Cookies.set('SelectedServerID', $(this).attr('id'))
+            $(this)
+                .toggleClass('list-group-item-info')
+                .toggleClass('');
+        });
+        });
+}
+function lgListLoad(data,Config,depth,curIn) {
+      if (curIn) {
+          var curIndex = curIn;
+      } else {
+          curIndex = 1;
+      }
       // Check maximum Depth
       if ( depth > 5) {
-        console.log("You are reach maximum depth of server list. Please keep list depth at maximum 5.")
+        console.log("You are reach maximum depth of server list. Please keep list depth at maximum 5." + depth)
         return
       }
        for (index in data) {
          // Start at no index and recursive increase list count.
-         if(typeof depth == "undefined") {
+         if(depth == "") {
           curDepth = ""
           target = "#serverList"
          } else {
@@ -96,28 +96,63 @@ $(function() {
            target= "#itemLgSv"+depth
          }
          hrefId = curDepth+ curIndex;
-         if ( typeof data[index]["Servers"] == "object" ) {// Look is a list or Server, If its list it returns object if not return undefined.
+         // If name not exist, get Json Object name
+         if (typeof data[index]["Name"] == "undefined") {
+            lgSvName = index;
+         } else {
+             lgSvName = data[index]["Name"];
+         }
+         // Control If Server Description Exist
+         if (typeof data[index]["Description"] == "undefined") {
+            lgsvDescription = "";
+         } else {
+            lgsvDescription = data[index]["Description"];
+         }
+         if ( data[index]["JsonURL"]  ) {
+           //lgListLoadAjax(data[index]["JsonURL"],depth,curIndex);
+           console.log("Currently Recursive Json List is not Supported")
+         } else if ( typeof data[index]["Servers"] == "object" ) {// Look is a list or Server, If its list it returns object if not return undefined.
             // Do for list items, First create list item after run recursive
-            //console.log(data[index],target)
-            // $( target ).append
             $( target ).append(`<a href="#itemLgSv`+hrefId+`" class="server-list-group-item list-group-item list-group-item-action" data-toggle="collapse">
-    <i class="fas fa-arrow-alt-circle-right"></i>`+data[index]["Name"]+`
-  </a>
-  <div class="list-group collapse" id="itemLgSv`+hrefId+`"> ` );
+    <i class="fas fa-arrow-alt-circle-right"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small>
+</a>
+<div class="list-group collapse" id="itemLgSv`+hrefId+`"> ` );
            // Recursive Call
-           lgListLoad(data[index]["Servers"], hrefId)
+           lgListLoad(data[index]["Servers"],Config, hrefId)
            $( target ).append(`</div>`);
-              } else {
+              } else if( data[index]["Url"] ) {
             // Do for server items
-            $( target ).append(`<a href="#" class="server-list-group-item list-group-item list-group-item-action lgserver"><i class="fas fa-server"></i>`+data[index]["Name"]+`</a>` );
+            $( target ).append(`<a href="#" class="server-list-group-item list-group-item list-group-item-action lgserver" id="itemLgSv`+hrefId+`"><i class="fas fa-server"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small></a>` );
             //console.log(index, data[index], hrefId, target)
+          } else {
+              console.log("Error: "+depth+" "+index+" is unknown type of server.")
           }
           // Current index location in for, increase every item in loop
           curIndex = curIndex+1
        }
     }
-    $.getJSON( "/server.json", function( data ) {
-    lgListLoad(data["Servers"]);
-    svbuttonTrigger() 
-  });  
+//     $.getJSON( "/server.json", function( data ) {
+//         lgListLoad(data["Servers"],data["Config"]);
+//         svbuttonTrigger() 
+//   });  
+  function lgListLoadAjax(URL,curIndex) {
+ $.ajax({
+ url: URL,
+ dataType: 'json',
+ success: function( data ) {
+    lgListLoad(data["Servers"],data["Config"],"",curIndex);
+    svbuttonTrigger();
+    svButtonLoadSave(Cookies.get('SelectedServerID'))
+ },
+ error: function( data ) {
+     if ( data["status"] == 200) {
+        console.log( 'ERROR: ', "Json Parse Error" );
+     } else {
+        console.log( 'ERROR: ', data );
+     }
+   
+ }
+});
+}
+lgListLoadAjax("server.json",0);
 </script>
