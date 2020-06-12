@@ -1,0 +1,77 @@
+{
+    "Config": {
+        "whois": "enabled",
+        "nslookup": "enabled",
+        "ping": {
+            "": "enabled",
+            "4": "enabled",
+            "6": "enabled"
+        },
+        "icmp": {
+            "": "enabled",
+            "4": "enabled",
+            "6": "enabled"
+        },
+        "tracert": {
+            "": "enabled",
+            "4": "enabled",
+            "6": "enabled"
+        },
+        "webcontrol": "enabled",
+        "tcp": "enabled"
+    },
+    "Servers": {
+        "Netherland": {
+            "Name": "Netherland",
+            "Description": "Network & Cloud Research and Test Servers",
+            "Servers" : {
+                "Amsterdam1": {
+                    "Name" : "Amsterdam - 1",
+                    "Description": "Equnix",
+                    "Url" : "http://looking-glass-controller4"
+                },
+                "Amsterdam2": {
+                    "Name" : "Amsterdam - 2",
+                    "Description": "Research lab",
+                    "Url" : "http://looking-glass-controller5"
+                }
+            }
+        },
+        "Turkey": {
+            "Name": "Turkey",
+            "Description":"Servers in Turkey",
+            "Servers":{
+                "Istanbul": {
+                    "Url":"http://looking-glass-controller1"
+                },
+                "Marmaris": {
+                    "Name": "Marmaris",
+                    "Description": "White-Door Router",
+                    "Servers": {
+                        "Marmaris1" : {
+                            "Name": "Marmaris 1",
+                            "Description": "Turknet LSN",
+                            "Url":"http://looking-glass-controller1"
+                        },
+                        "Marmaris2" : {
+                            "Name": "Marmaris 2",
+                            "Description": "Teredo",
+                            "Url":"http://looking-glass-controller2"
+                        },
+                        "Marmaris3" : {
+                            "Name": "Marmaris 3",
+                            "Url":"http://looking-glass-controller3"
+                        }
+                    }
+                }
+            }
+            
+        },
+        "USA": {
+            "Name": "USA",
+            "Description": "Google Cloud IPv4",
+            "Url":"http://looking-glass-controller1"
+        }
+        
+    }
+}
