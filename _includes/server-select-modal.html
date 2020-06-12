@@ -75,11 +75,27 @@ function svbuttonTrigger() {
         });
         });
 }
+function svConfigComparisor(oldConfig,newConfig) {
+    var tempConfig = oldConfig
+    for (confIndex in oldConfig) {
+        //console.log("index = "+index)
+        if ( typeof oldConfig[confIndex] == "object" && typeof newConfig[confIndex] == "object"){
+            tempConfig[confIndex] = svConfigComparisor(oldConfig[confIndex],newConfig[confIndex])
+        } else {
+            if (newConfig[confIndex]) {
+                tempConfig[confIndex] = newConfig[confIndex]
+            } else {
+                tempConfig[confIndex] = oldConfig[confIndex]
+            }
+        }
+    }
+    return tempConfig
+}
 function lgListLoad(data,Config,depth,curIn) {
       if (curIn) {
           var curIndex = curIn;
       } else {
-          curIndex = 1;
+          var curIndex = 1;
       }
       // Check maximum Depth
       if ( depth > 5) {
@@ -87,54 +103,58 @@ function lgListLoad(data,Config,depth,curIn) {
         return
       }
        for (index in data) {
+        // console.log("Old config for "+index,Config)
+        // var curConfig
+         if (data[index]["Config"]) {
+             var curConfig = svConfigComparisor(Config,data[index]["Config"])
+         } else {
+             var curConfig = Config
+         }
+
          // Start at no index and recursive increase list count.
          if(depth == "") {
-          curDepth = ""
-          target = "#serverList"
+          var curDepth = ""
+          var target = "#serverList"
          } else {
-           curDepth= depth +"-"
-           target= "#itemLgSv"+depth
+           var curDepth= depth +"-"
+           var target= "#itemLgSv"+depth
          }
-         hrefId = curDepth+ curIndex;
+         var hrefId = curDepth+ curIndex;
+
          // If name not exist, get Json Object name
-         if (typeof data[index]["Name"] == "undefined") {
-            lgSvName = index;
+         if (data[index]["Name"] && data[index]["Name"] != "" ) {
+            var lgSvName = index;
          } else {
-             lgSvName = data[index]["Name"];
+            var lgSvName = data[index]["Name"];
          }
+
          // Control If Server Description Exist
          if (typeof data[index]["Description"] == "undefined") {
-            lgsvDescription = "";
+            var lgsvDescription = "";
          } else {
-            lgsvDescription = data[index]["Description"];
+            var lgsvDescription = data[index]["Description"];
          }
+
          if ( data[index]["JsonURL"]  ) {
            //lgListLoadAjax(data[index]["JsonURL"],depth,curIndex);
            console.log("Currently Recursive Json List is not Supported")
          } else if ( typeof data[index]["Servers"] == "object" ) {// Look is a list or Server, If its list it returns object if not return undefined.
             // Do for list items, First create list item after run recursive
-            $( target ).append(`<a href="#itemLgSv`+hrefId+`" class="server-list-group-item list-group-item list-group-item-action" data-toggle="collapse">
-    <i class="fas fa-arrow-alt-circle-right"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small>
-</a>
-<div class="list-group collapse" id="itemLgSv`+hrefId+`"> ` );
-           // Recursive Call
-           lgListLoad(data[index]["Servers"],Config, hrefId)
-           $( target ).append(`</div>`);
-              } else if( data[index]["Url"] ) {
+            $( target ).append(`<a href="#itemLgSv`+hrefId+`" class="server-list-group-item list-group-item list-group-item-action" data-toggle="collapse"><i class="fas fa-arrow-alt-circle-right"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small></a><div class="list-group collapse" id="itemLgSv`+hrefId+`"> ` );
+            // Recursive Call
+            lgListLoad(data[index]["Servers"],curConfig, hrefId)
+            $( target ).append(`</div>`);
+        } else if( data[index]["Url"] ) {
             // Do for server items
-            $( target ).append(`<a href="#" class="server-list-group-item list-group-item list-group-item-action lgserver" id="itemLgSv`+hrefId+`"><i class="fas fa-server"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small></a>` );
-            //console.log(index, data[index], hrefId, target)
-          } else {
+            $( target ).append(`<a href="#" class="server-list-group-item list-group-item list-group-item-action lgserver" data-svurl='`+data[index]["Url"]+`' data-svconf='`+JSON.stringify(curConfig)+`' id="itemLgSv`+hrefId+`"><i class="fas fa-server"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small></a>` );
+        } else {
               console.log("Error: "+depth+" "+index+" is unknown type of server.")
           }
           // Current index location in for, increase every item in loop
           curIndex = curIndex+1
-       }
-    }
-//     $.getJSON( "/server.json", function( data ) {
-//         lgListLoad(data["Servers"],data["Config"]);
-//         svbuttonTrigger() 
-//   });  
+       } // for loop end
+    } // function end
+
   function lgListLoadAjax(URL,curIndex) {
  $.ajax({
  url: URL,

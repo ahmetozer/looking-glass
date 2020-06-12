@@ -43,7 +43,8 @@
       $("#lodingCircle").show();
        hostname = $("#hostname").val();
        $("#funcCard").show()
-       $('#funcFrame').attr('src', "https://looking-glass-controller/looking-glass-controller?type="+funcType+IPversion+"&host="+hostname)
+       $('#funcFrame').attr('src', $("#"+Cookies.get('SelectedServerID')).data("svurl")+"?type="+funcType+IPversion+"&host="+hostname)
+       ///looking-glass-controller
      }
      $(function () {
   //$('[data-toggle="tooltip"]').tooltip()

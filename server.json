@@ -24,11 +24,21 @@
         "Netherland": {
             "Name": "Netherland",
             "Description": "Network & Cloud Research and Test Servers",
+            "Config":{
+                "whois": "disabled",
+                "webcontrol": "disabled",
+                "tcp": "disabled"
+            },
             "Servers" : {
                 "Amsterdam1": {
                     "Name" : "Amsterdam - 1",
                     "Description": "Equnix",
-                    "Url" : "http://looking-glass-controller4"
+                    "Url" : "https://looking-glass-controller/looking-glass-controller",
+                    "Config":{
+                        "whois": "enabled",
+                        "webcontrol": "disabled",
+                        "nslookup": "disabled"
+                    }
                 },
                 "Amsterdam2": {
                     "Name" : "Amsterdam - 2",
