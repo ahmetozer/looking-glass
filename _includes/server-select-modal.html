@@ -31,7 +31,8 @@
 
             .server-list-group-item .fas {
                 margin-right: 5px;
-            }</style>
+            }
+            </style>
              
             <div class="server-list-group">
 
@@ -39,23 +40,95 @@
 
                 </div>
                   
-                </div>
+            </div>
               <!-- Modal Body End -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-light">Clear</button>
+            <button type="button" class="btn btn-outline-info" onclick="showAllListToggle()" id="showAllLgList">Show All</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
   <script>
-function svButtonLoadSave(itemId) {
-    $('.collapse').not($('#'+itemId).parents()).collapse('hide')
-    $('#'+itemId).parents().collapse('show')
-    $('#'+itemId).addClass('list-group-item-info')
+      showAllListStat = "no";
+      
+      // Show All Servers On List in Modal
+      function showAllListToggle() {
+          if (showAllListStat == "no") {
+            $('#serverList').find('.collapse').collapse('show')
+            showAllListStat = "yes"
+            $("#showAllLgList")
+            .html("Hide all")
+            .removeClass('btn-outline-info')
+            .addClass('btn-outline-warning');
+          } else {
+              var itemId = Cookies.get('SelectedServerID')
+              if (itemId != null && itemId != "") {
+                $('.collapse').not($('#'+itemId).parents()).collapse('hide')
+                $('#'+itemId).parents().collapse('show')
+              } else {
+                $('#serverList').find('.collapse').collapse('hide')
+              }
+              showAllListStat = "no"
+              $("#showAllLgList")
+              .html("Show all")
+              .addClass('btn-outline-info')
+              .removeClass('btn-outline-warning');
+          }
+      }
+
+      // Clear Server Selection
+      function clearServerSelection() {
+        Cookies.set('SelectedServerID', null)
+        
+      }
+
+      // Apply Server Config to Front End
+function svApplyConfig(config) {
+    var isEnabled
+    for (confIndex in config) {
+    
+    if ( typeof config[confIndex] == "object"){
+        isEnabled = svApplyConfig(config[confIndex])
+        } else {
+            if (isEnabled) {
+                if(config[confIndex] == "enabled") {
+                    isEnabled = "enabled"
+                }
+            } else {
+                isEnabled = config[confIndex]
+            }
+            console.log(confIndex,config[confIndex])
+        }
+    }
+    // after for
+    if (config[confIndex] == "enabled") {
+        $("#lgOption"+confIndex).prop('disabled', false);
+    } else {
+        $("#lgOption"+confIndex).prop('disabled', true);
+    }
+
+    return isEnabled
 }
-function svbuttonTrigger() {
+
+//
+function svButtonLoadSave(itemId) {
+    if (itemId != null && itemId != "") {
+        $('.collapse').not($('#'+itemId).parents()).collapse('hide')
+        $('#'+itemId).parents().collapse('show')
+        $('#'+itemId).addClass('list-group-item-info')
+        
+        $("#serverSelectButton").html($('#'+itemId).data( "svname" ));
+        $('#serverSelectButton').addClass('btn-outline-light').removeClass('btn-outline-danger');
+        svApplyConfig($('#'+itemId).data( "svconf" ))
+        
+    }
+}
+
+// When the server clicked , Run these. "svButtonTrigger()"
+function svButtonTrigger() {
     $(function() {
         $('.server-list-group-item').on('click', function() {
             $('.collapse').not($(this).parents('')).collapse('hide');
@@ -69,12 +142,18 @@ function svbuttonTrigger() {
         $('.lgserver').on('click', function() {
             $('.lgserver').removeClass('list-group-item-info')
             Cookies.set('SelectedServerID', $(this).attr('id'))
+            $("#serverSelectButton").html($(this).data( "svname" ));
+            svApplyConfig($(this).data( "svconf" ))
+            $('#serverSelectButton').addClass('btn-outline-light').removeClass('btn-outline-danger');
             $(this)
                 .toggleClass('list-group-item-info')
                 .toggleClass('');
         });
         });
 }
+// END of the "svButtonTrigger()"
+
+// Compare Nested Configs with Recursive , "svConfigComparisor"
 function svConfigComparisor(oldConfig,newConfig) {
     var tempConfig = oldConfig
     for (confIndex in oldConfig) {
@@ -91,13 +170,17 @@ function svConfigComparisor(oldConfig,newConfig) {
     }
     return tempConfig
 }
-function lgListLoad(data,Config,depth,curIn) {
+// End of the "svConfigComparisor"
+
+// Load Looking Glass Server List
+function lgServerListLoad(data,Config,depth,curIn) {
       if (curIn) {
           var curIndex = curIn;
       } else {
           var curIndex = 1;
       }
       // Check maximum Depth
+      var depth
       if ( depth > 5) {
         console.log("You are reach maximum depth of server list. Please keep list depth at maximum 5." + depth)
         return
@@ -122,7 +205,7 @@ function lgListLoad(data,Config,depth,curIn) {
          var hrefId = curDepth+ curIndex;
 
          // If name not exist, get Json Object name
-         if (data[index]["Name"] && data[index]["Name"] != "" ) {
+         if (typeof data[index]["Name"] == "undefined" && data[index]["Name"] != "" ) {
             var lgSvName = index;
          } else {
             var lgSvName = data[index]["Name"];
@@ -136,32 +219,34 @@ function lgListLoad(data,Config,depth,curIn) {
          }
 
          if ( data[index]["JsonURL"]  ) {
-           //lgListLoadAjax(data[index]["JsonURL"],depth,curIndex);
+           //lgServerListLoadAjax(data[index]["JsonURL"],depth,curIndex);
            console.log("Currently Recursive Json List is not Supported")
          } else if ( typeof data[index]["Servers"] == "object" ) {// Look is a list or Server, If its list it returns object if not return undefined.
             // Do for list items, First create list item after run recursive
             $( target ).append(`<a href="#itemLgSv`+hrefId+`" class="server-list-group-item list-group-item list-group-item-action" data-toggle="collapse"><i class="fas fa-arrow-alt-circle-right"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small></a><div class="list-group collapse" id="itemLgSv`+hrefId+`"> ` );
             // Recursive Call
-            lgListLoad(data[index]["Servers"],curConfig, hrefId)
+            lgServerListLoad(data[index]["Servers"],curConfig, hrefId)
             $( target ).append(`</div>`);
         } else if( data[index]["Url"] ) {
             // Do for server items
-            $( target ).append(`<a href="#" class="server-list-group-item list-group-item list-group-item-action lgserver" data-svurl='`+data[index]["Url"]+`' data-svconf='`+JSON.stringify(curConfig)+`' id="itemLgSv`+hrefId+`"><i class="fas fa-server"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small></a>` );
+            $( target ).append(`<a href="#" class="server-list-group-item list-group-item list-group-item-action lgserver" data-svurl='`+data[index]["Url"]+`' data-svName='`+lgSvName+`' data-svconf='`+JSON.stringify(curConfig)+`' id="itemLgSv`+hrefId+`"><i class="fas fa-server"></i>`+lgSvName+`<small class="text-muted float-right">`+lgsvDescription+`</small></a>` );
         } else {
               console.log("Error: "+depth+" "+index+" is unknown type of server.")
           }
           // Current index location in for, increase every item in loop
           curIndex = curIndex+1
        } // for loop end
-    } // function end
+    }
+// End of the "lgServerListLoad"
 
-  function lgListLoadAjax(URL,curIndex) {
+// Get server list with ajax
+  function lgServerListLoadAjax(URL,curIndex) {
  $.ajax({
  url: URL,
  dataType: 'json',
  success: function( data ) {
-    lgListLoad(data["Servers"],data["Config"],"",curIndex);
-    svbuttonTrigger();
+    lgServerListLoad(data["Servers"],data["Config"],"",curIndex);
+    svButtonTrigger();
     svButtonLoadSave(Cookies.get('SelectedServerID'))
  },
  error: function( data ) {
@@ -174,5 +259,5 @@ function lgListLoad(data,Config,depth,curIn) {
  }
 });
 }
-lgListLoadAjax("server.json",0);
+lgServerListLoadAjax("server.json",0);
 </script>
