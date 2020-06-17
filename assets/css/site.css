@@ -1,0 +1,87 @@
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body {
+  background-color: #f1f2f6;
+  padding-top: 3.5rem;
+  background-image: url("https://unsplash.com/photos/E0AHdsENmDg/download?force=true&w=1920");
+ /* background-image: url("https://cdn.ampproject.org/i/source.unsplash.com/collection/9326600/1920x1080?cdo=asdfas"); /*a */
+  /*background-image: url("https://source.unsplash.com/AkGaoR1R3iA/1920x1080"); /*M5tzZtFCOfs,AkGaoR1R3iA*/
+margin-bottom: 56px; /* footer height + 4 */
+}
+
+
+/*
+ * Custom translucent site header
+ */
+
+ .funcFrame {
+   border-radius: 15px;
+ }
+ 
+ .lg-blur {
+   background-color: rgba(125, 125, 125, 0.5);
+   -webkit-backdrop-filter: saturate(180%) blur(20px);
+   backdrop-filter: saturate(180%) blur(20px);
+ }
+.site-header {
+  background-color: rgba(0, 0, 0, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #999;
+  transition: ease-in-out color .15s;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+
+/**
+* Loading Circle
+*/
+
+#lodingCircle {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 38px;
+  height: 38px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Server-Select-Modal*/
+.server-list-group > .list-group > .list-group-item {
+  padding-left: 30px;
+}
+
+.server-list-group > .list-group > .list-group > .list-group-item {
+  padding-left: 40px;
+}
+
+.server-list-group > .list-group > .list-group > .list-group > .list-group-item {
+  padding-left: 50px;
+} 
+.server-list-group > .list-group > .list-group > .list-group > .list-group > .list-group-item {
+  padding-left: 60px;
+} 
+.server-list-group > .list-group > .list-group > .list-group > .list-group > .list-group > .list-group-item {
+  padding-left: 70px;
+} 
+
+.server-list-group-item .fas {
+  margin-right: 5px;
+}
