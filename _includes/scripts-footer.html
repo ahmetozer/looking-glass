@@ -18,7 +18,7 @@
       if(hasIPVersion == "yes"){
         $("#reqType").show();
       } else{
-        $("#reqType").val("");
+        $("#reqType").val("Default");
         $("#reqType").hide();
         IPversion=""
       }
@@ -28,9 +28,9 @@
 
   $("#reqType").change(function(){
     IPversion = $(this).children("option:selected").val()
-    if(IPversion == "") {
-      $('#hostname').attr('pattern', domainRegex+"|"+ipv4Regex+"|"+ipv6Regex)
-    } else if (IPversion == "4") {
+    if(IPversion == "Default") {
+      $('#hostname').attr('pattern', '("('+domainRegex+")|("+ipv4Regex+")|("+ipv6Regex+')")')
+    } else if (IPversion == "IPv4") {
       $('#hostname').attr('pattern', domainRegex+"|"+ipv4Regex)
     } else {
       $('#hostname').attr('pattern', domainRegex+"|"+ipv6Regex)
@@ -45,15 +45,38 @@
      });
 
      function lgRun() {
+       var svURL = $("#"+Cookies.get('SelectedServerID')).data("svurl");
+       if ( svURL && svURL != "") {
       $("#lodingCircle").show();
-       hostname = $("#hostname").val();
-       $("#funcCard").show()
-       $('#funcFrame').attr('src', $("#"+Cookies.get('SelectedServerID')).data("svurl")+"?type="+funcType+IPversion+"&host="+hostname)
+      $.ajax({
+      url: svURL+"/svCheck",
+      type : "HEAD",
+      async : true,
+      success: function( data ) {
+        $("#funcCard").show()
+       $('#funcFrame').attr('src', svURL+"/looking-glass-controller"+"?"+$("#lg_run_form").serialize())
+      },
+      error: function( data ) {
+        $("#lodingCircle").hide()
+        $('#funcFrame').attr('src', "iframe-error.html")
+      }
+      });
+      // $("#funcCard").show()
+       //$('#funcFrame').attr('src', svURL+"?"+$("#lg_run_form").serialize())
        ///looking-glass-controller
+     } else {
+      $('#serverSelectModal').modal('toggle')
      }
+    }
      $(function () {
   //$('[data-toggle="tooltip"]').tooltip()
 })
 
 </script>
 
+<!-- To enable bootstrap tooltip -->
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
