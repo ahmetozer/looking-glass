@@ -2,7 +2,7 @@
 body {
   background-color: #f1f2f6;
   padding-top: 3.5rem;
-  background-image: url("https://unsplash.com/photos/E0AHdsENmDg/download?force=true&w=1920");
+ /* background-image: url("https://unsplash.com/photos/E0AHdsENmDg/download?force=true&w=1920");
  /* background-image: url("https://cdn.ampproject.org/i/source.unsplash.com/collection/9326600/1920x1080?cdo=asdfas"); /*a */
   /*background-image: url("https://source.unsplash.com/AkGaoR1R3iA/1920x1080"); /*M5tzZtFCOfs,AkGaoR1R3iA*/
 margin-bottom: 56px; /* footer height + 4 */
@@ -10,7 +10,7 @@ margin-bottom: 56px; /* footer height + 4 */
 
 
 /*
- * Custom translucent site header
+  Custom translucent site header
  */
 
  .funcFrame {
@@ -36,10 +36,12 @@ margin-bottom: 56px; /* footer height + 4 */
   text-decoration: none;
 }
 
+.server-list-feature-icons {
+  margin-left: 10px;
+}
 
-
-/**
-* Loading Circle
+/* 
+ Loading Circle
 */
 
 #lodingCircle {

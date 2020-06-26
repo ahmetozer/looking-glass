@@ -53,7 +53,6 @@ if (config[confIndex] == "enabled") {
   $("#lgOption"+confIndex).prop('disabled', true);
 }
       }
-      console.log(confIndex,config[confIndex])
   }
 }
 
@@ -123,7 +122,7 @@ $(function() {
 
 // Compare Nested Configs with Recursive , "svConfigComparisor"
 function svConfigComparisor(oldConfig,newConfig) {
-var tempConfig = oldConfig
+var tempConfig  = { ...oldConfig };
 for (confIndex in oldConfig) {
   //console.log("index = "+index)
   if ( typeof oldConfig[confIndex] == "object" && typeof newConfig[confIndex] == "object"){
@@ -136,6 +135,7 @@ for (confIndex in oldConfig) {
       }
   }
 }
+
 return tempConfig
 }
 // End of the "svConfigComparisor"
@@ -150,19 +150,10 @@ for (item in incomingArray) {
   }
   
 }
-console.log(tempString)
+//console.log(tempString)
 return tempString
 }
-function returnTempArr(arr,arr2) {
-var tempArr = []
-for (item in arr) {
-  tempArr.push(arr[item])
-}
-if (arr2) {
-  tempArr.push(arr2)
-}
-return tempArr
-}
+
 // Load Looking Glass Server List
 function lgServerListLoad(data,Config,depth) {
 // Check maximum Depth
@@ -170,8 +161,9 @@ if ( depth != null && typeof depth == "object" ) {
     if (depth.length > 6){console.log("You are reach maximum depth of server list. Please keep list depth at maximum 5."); return } // If is not check 5 because modal id exist in array
 } else { console.log("Depth is not array"); return}
 
-var curIndex = 1;
+//var curIndex = 1;
  for (index in data) {
+  var curIndex = index
    //console.log("Old config for "+index,Config)
   
   // Check if has a config or not. If element has a config then make a Compare
@@ -201,25 +193,51 @@ var curIndex = 1;
      console.log("Currently Nested Json List is not Supported")
    } else if ( typeof data[index]["Servers"] == "object" ) {// Look is a list or Server, If its list it returns object if not return undefined.
       // Do for list items, First create list item after run recursive
-      console.log("Bu bir liste "+lgSvName,returnTempArr(depth,curIndex))
-      var tempDepth = returnTempArr(depth,curIndex)
+      //console.log("This is a list "+lgSvName,returnTempArr(depth,curIndex)) // For debugging
+      var tempDepth = Object.assign([], depth) 
+      tempDepth.push(curIndex)      
       //console.log(depth,tempDepth)
-      $( "#"+arrToDashString(depth) ).append(`<a href="#`+arrToDashString(tempDepth)+`" class="server-list-group-item list-group-item list-group-item-action btn btn-dark" data-toggle="collapse"><i class="fas fa-list text-dark"></i> `+lgSvName+`<small class="text-muted float-right">`+lgSVDescription+`</small></a><div class="list-group collapse" id="`+arrToDashString(tempDepth)+`"> ` );
+      $( "#"+arrToDashString(depth) ).append(`<button href="#`+arrToDashString(tempDepth)+`" class="server-list-group-item list-group-item list-group-item-action btn btn-dark" data-toggle="collapse"><i class="fas fa-list text-dark"></i> `+lgSvName+`<small class="text-muted float-right">`+lgSVDescription+`</small></button><div class="list-group collapse" id="`+arrToDashString(tempDepth)+`"> ` );
       // Recursive Call
-      lgServerListLoad(data[index]["Servers"],curConfig, returnTempArr(depth,curIndex))
+      lgServerListLoad(data[index]["Servers"],curConfig, tempDepth)
       $( "#"+arrToDashString(depth) ).append(`</div>`);
 
   } else if( data[index]["Url"] ) {
       // Do for server items
-      tempDepth =returnTempArr(depth,curIndex)
-      console.log("Bu bir server "+lgSvName,tempDepth)
-      $( "#"+arrToDashString(depth) ).append(`<a href="#" class="server-list-group-item list-group-item list-group-item-action btn btn-light lgserver" data-svurl='`+data[index]["Url"]+`' data-svName='`+lgSvName+`' data-svconf='`+JSON.stringify(curConfig)+`' id="`+arrToDashString(tempDepth)+`"><i class="fas fa-server text-primary"></i>`+lgSvName+`<small class="text-muted float-right">`+lgSVDescription+`</small></a>` );
+      var tempDepth = Object.assign([], depth) 
+      tempDepth.push(curIndex) 
+      //console.log("This is a server "+lgSvName,tempDepth) // for debugging
+      var listIcons = ""
+      var serverDisabled = ""
+      
+      if(curConfig["IPv4"] == "enabled" || curConfig["IPv6"] == "enabled") {
+        if (curConfig["IPv4"] == "enabled" && curConfig["IPv6"] == "enabled") {
+          listIcons = listIcons + '<font class="server-list-feature-icons text-success" data-toggle="tooltip" data-placement="top" title="IPv4 and IPv6 Connection">DS</font>'
+        } else if (curConfig["IPv4"] == "enabled"){
+          listIcons = listIcons + '<font class="server-list-feature-icons text-muted" data-toggle="tooltip" data-placement="top" title="IPv4 OnlyConnection">IPv4</font>'
+        } else {
+          listIcons = listIcons + '<font class="server-list-feature-icons text-warning" data-toggle="tooltip" data-placement="top" title="IPv6 Only Connection">IPv6</font>'
+        }
+        
+      } else {
+        serverDisabled = "disabled"
+      }
+      if(curConfig["speedtest"] == "enabled") {
+        listIcons = listIcons + '<i class="fas fa-tachometer-alt server-list-feature-icons text-dark" data-toggle="tooltip" data-placement="top" title="SpeedTest"></i>'
+      }
+
+      if(curConfig["tracert"] == "enabled") {
+        listIcons = listIcons + '<i class="fas fa-road server-list-feature-icons text-muted" data-toggle="tooltip" data-placement="top" title="TraceRoute"></i>'
+      }
+      $( "#"+arrToDashString(depth) ).append(`<button class="server-list-group-item list-group-item list-group-item-action btn btn-light lgserver"`+serverDisabled+` data-svurl='`+data[index]["Url"]+`' data-svName='`+lgSvName+`' data-svconf='`+JSON.stringify(curConfig)+`' id="`+arrToDashString(tempDepth)+`"><i class="fas fa-server text-primary"></i>`+lgSvName+
+      listIcons+
+      `<small class="text-muted float-right">`+lgSVDescription+`</small></button>` );
 
   } else {
         console.log("Error: "+arrToDashString(depth)+" "+index+" is unknown type of server.")
     }
     // Current index location in for, increase every item in loop
-    curIndex = curIndex+1
+    //curIndex = curIndex+1
  } // for loop end
 }
 // End of the "lgServerListLoad"
@@ -233,6 +251,9 @@ success: function( data ) {
 lgServerListLoad(data["Servers"],data["ServerConfig"],["serverList"]);
 svButtonTrigger();
 svButtonLoadSave(Cookies.get('SelectedServerID'))
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 },
 error: function( data ) {
 if ( data["status"] == 200) {
