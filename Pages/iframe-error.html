@@ -1,0 +1,56 @@
+---
+layout: empty
+title:  ""
+permalink: iframe-error.html
+---
+<style>
+@media screen and (orientation:landscape) {
+    body, html{
+        height: 100vh;
+        width: 100vh;
+    }
+}
+@media screen and (orientation:portrait) {
+    body, html{
+        height: 100vw;
+        width: 100vw;
+    }
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("assets/images/looking-glass-icon-grayscale.svg");
+
+  /* Full height */
+  height: 100%; 
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.tFont {
+    color: #000; /* Fallback for older browsers */
+    color: rgba(255, 0, 0, 0.637);
+
+    font-size: 16pt;
+    font-family: Arial, sans-serif;
+}
+
+/* If the text has multiple lines, add the following: */
+</style>
+<body>
+    <div class="bg"><font class="tFont">Control Server Error</font></br>
+        Please Change the Server
+    </div>  
+</body>
