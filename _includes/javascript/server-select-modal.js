@@ -47,6 +47,7 @@ function svApplyConfig(config) {
     $("#lgSVconFIPvDefault").prop('disabled', false);
   }
   $(".autoSelected option").each(function(){
+    $(this, 'option:selected').removeAttr('selected');
     $(this).not('[disabled]:first').attr('selected','selected');
   });
   
@@ -63,7 +64,7 @@ if (itemId != null && itemId != "") {
   $("#serverSelectButton")
       .html($('#'+itemId).data( "svname" ))
       .addClass('btn-outline-light').removeClass('btn-outline-danger');
-      currentServerConfig = $('#'+itemId).data( "svconf" )
+  currentServerConfig = $('#'+itemId).data( "svconf" );
   svApplyConfig(currentServerConfig);
   
 } else {
@@ -104,7 +105,9 @@ $(function() {
       $('.lgserver').removeClass('list-group-item-info')
       Cookies.set('SelectedServerID', $(this).attr('id'))
       $("#serverSelectButton").html($(this).data( "svname" ));
-      svApplyConfig($(this).data( "svconf" ))
+      currentServerConfig = $(this).data( "svconf" );
+      svApplyConfig(currentServerConfig);
+      //svApplyConfig($(this).data( "svconf" ))
       $('#serverSelectButton').addClass('btn-outline-light').removeClass('btn-outline-danger');
       $(this)
           .toggleClass('list-group-item-info')
