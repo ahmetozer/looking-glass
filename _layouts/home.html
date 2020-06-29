@@ -10,20 +10,20 @@
             <label class="input-group-text d-none d-lg-block" for="funcType">Command</label>
           </div>
 
-          <select class="custom-select ml-3 col-lg-2 autoSelected" name="funcType" id="funcType">
+          <select class="custom-select ml-3 col-lg-2 autoSelected ipMayRequired" name="funcType" id="funcType">
             <option id="lgSVconFping" value="ping" hasIPversion="yes" >Ping</option>
             <option id="lgSVconFtracert" value="tracert" hasIPversion="yes">Tracert</option>
             <option id="lgSVconFnslookup" value="nslookup">Nslookup</option>
             <option id="lgSVconFwhois" value="whois">Whois</option>
           </select>
 
-          <select class="custom-select col-lg-2 ml-3 autoSelected" name="IPVersion" id="reqType">
-            <option id="lgSVconFIPvDefault" value="Default">default</option>
+          <select class="custom-select col-lg-2 ml-3 autoSelected" name="IPVersion" id="IPVersion">
+            <option id="lgSVconFIPvDefault" value="IPvDefault">default</option>
             <option id="lgSVconFIPv4" value="IPv4">IPv4</option>
             <option id="lgSVconFIPv6" value="IPv6">IPv6</option>
           </select>
           
-          <input type="text" name="host" id="hostname" class="col form-control ml-3" placeholder="host or ip" aria-label="host or ip" aria-describedby="button-addon2"></input>
+          <input type="text" name="host" id="hostname" class="col form-control ml-3" placeholder="host or ip" aria-label="host or ip" aria-describedby="button-addon2" required></input>
 
           <div class="input-group-append ml-3">
             <button class="btn btn-primary" type="submit" id="runButton" onclick="">Run</button>
