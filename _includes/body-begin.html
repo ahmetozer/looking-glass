@@ -1,0 +1,49 @@
+<body>
+  <nav class="site-header navbar navbar-expand-md navbar-dark fixed-top ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ site.company.url }}">
+        <img src="/assets/images/looking-glass-icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        {{ site.title }}
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          {% for link in site.navbarLinks limit: 7 %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ link.url }}">{{ link.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% if site.company.logo %}
+  {% if site.company.logo != nil %}
+  {% if site.company.logo != "" %}
+  </br>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-auto">
+        <div class="card card-body">
+          <img width="300" class="align-self-center" alt="{{ site.company.title }}" src="{{ site.company.logo }}"></img>
+        </div>
+      </div>
+      <div class="col">
+        <div class="d-block d-sm-block d-md-none " style="margin-top: 10px;"></div>
+        <div class="card my-auto" style="height:100%;">
+          <div class="card-body align-self-center" style="margin-top: auto; margin-bottom: auto;">
+            {{page.description}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  </br>

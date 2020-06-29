@@ -1,0 +1,82 @@
+<head>
+<meta charset="UTF-8">
+<title>404</title>
+</head>
+<body>
+<div id="starsBox"></div>
+<p>Page Not Found
+  <span>
+    The page you want to look it, is not exist. To continue you can
+    <a onclick="window.history.back()" target="_blank"style='cursor: pointer;'>go back</a>.
+    <br>
+    <a href='/status' >Status of Services</a></span>
+</p>
+</body>
+<style>
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+a {
+	style='cursor: pointer;'
+}
+body {
+  background: #22313f;
+}
+
+#starsBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  opacity: .5;
+}
+#starsBox span {
+  display: inline-block;
+  width: auto;
+  position: absolute;
+  border-radius: 100%;
+  transition: 100s linear;
+}
+
+p {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  transform: translateY(-50%);
+  font-size: 40px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 0 50px black;
+  text-transform: uppercase;
+  font-family: 'Roboto','Helvetica','Arial',sans-serif;
+  letter-spacing: 5px;
+}
+p > span {
+  display: block;
+  font-size: 12px;
+  color: #bdc3c7;
+  margin-top: 30px;
+  font-weight: 100;
+  text-shadow: 0 0 50px black;
+  letter-spacing: 3px;
+}
+p > span > a {
+  font-weight: 700;
+  text-decoration: none;
+  color: #d64541;
+  padding-bottom: 2px;
+  border-bottom: 0px solid #d64541;
+  transition: 0.5s;
+}
+p > span > a:hover {
+  padding-bottom: 5px;
+  border-bottom: 2px solid #d64541;
+}
+
+</style>
