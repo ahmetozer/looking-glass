@@ -44,7 +44,7 @@ margin-bottom: 56px; /* footer height + 4 */
  Loading Circle
 */
 
-#lodingCircle {
+#loadingCircle {
   border: 8px solid #f3f3f3;
   border-radius: 50%;
   border-top: 8px solid #3498db;

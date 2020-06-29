@@ -1,5 +1,5 @@
 showAllListStat = "no";
-
+var currentServerConfig
 // Show All Servers On List in Modal
 function listAllToggleToShow() {
     if (showAllListStat == "no") {
@@ -34,30 +34,23 @@ function ListServerSelectDelete() {
 
 // Apply Server Config to Front End
 function svApplyConfig(config) {
-var isEnabled
-for (confIndex in config) {
-
-if ( typeof config[confIndex] == "object"){
-  isEnabled = svApplyConfig(config[confIndex])
-  } else {
-      if (isEnabled) {
-          if(config[confIndex] == "enabled") {
-              isEnabled = "enabled"
-          }
-      } else {
-          isEnabled = config[confIndex]
-          // after for
-if (config[confIndex] == "enabled") {
-  $("#lgOption"+confIndex).prop('disabled', false);
-} else {
-  $("#lgOption"+confIndex).prop('disabled', true);
-}
-      }
+  for (confIndex in config) {
+    if (config[confIndex] == "enabled") {
+      $("#lgSVconF"+confIndex).prop('disabled', false);
+    } else {
+      $("#lgSVconF"+confIndex).prop('disabled', true);
+    }
   }
-}
+  if (config["IPv4"] != "enabled" || config["IPv6"] != "enabled") {
+    $("#lgSVconFIPvDefault").prop('disabled', true);
+  } else {
+    $("#lgSVconFIPvDefault").prop('disabled', false);
+  }
+  $(".autoSelected option").each(function(){
+    $(this).not('[disabled]:first').attr('selected','selected');
+  });
+  
 
-
-return isEnabled
 }
 
 //
@@ -70,7 +63,8 @@ if (itemId != null && itemId != "") {
   $("#serverSelectButton")
       .html($('#'+itemId).data( "svname" ))
       .addClass('btn-outline-light').removeClass('btn-outline-danger');
-  svApplyConfig($('#'+itemId).data( "svconf" ));
+      currentServerConfig = $('#'+itemId).data( "svconf" )
+  svApplyConfig(currentServerConfig);
   
 } else {
   $("#serverList")

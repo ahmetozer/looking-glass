@@ -3,35 +3,36 @@
   <div class="container-fluid ">
     <!-- Page Heading -->
    <!--  <div class="card lg-blur"> -->
-      <div class="card-body">
+      <div class="card card-body">
         <div class="input-group">
-          <form action="javascript:lgRun();" autocomplete="off" class="col form-inline">
+          <form action="javascript:lgRun();" id="lg_run_form" autocomplete="off" class="col form-inline">
           <div class="input-group-prepend">
             <label class="input-group-text d-none d-lg-block" for="funcType">Command</label>
           </div>
 
-          <select class="custom-select ml-3 col-lg-2" id="funcType">
-            <option id="lgOptionping" value="ping" selected hasIPversion="yes" >Ping</option>
-            <option id="lgOptiontracert" value="tracert" hasIPversion="yes">Tracert</option>
-            <option id="lgOptionnslookup" value="nslookup">Nslookup</option>
-            <option id="lgOptionwhois" value="whois">Whois</option>
+          <select class="custom-select ml-3 col-lg-2 autoSelected" name="funcType" id="funcType">
+            <option id="lgSVconFping" value="ping" hasIPversion="yes" >Ping</option>
+            <option id="lgSVconFtracert" value="tracert" hasIPversion="yes">Tracert</option>
+            <option id="lgSVconFnslookup" value="nslookup">Nslookup</option>
+            <option id="lgSVconFwhois" value="whois">Whois</option>
           </select>
 
-          <select class="custom-select col-lg-2 ml-3" id="reqType">
-            <option id="lgreqvdefault" selected value="">default</option>
-            <option id="lgreqv4" value="4">IPv4</option>
-            <option id="lgreqv6" value="6">IPv6</option>
+          <select class="custom-select col-lg-2 ml-3 autoSelected" name="IPVersion" id="reqType">
+            <option id="lgSVconFIPvDefault" value="Default">default</option>
+            <option id="lgSVconFIPv4" value="IPv4">IPv4</option>
+            <option id="lgSVconFIPv6" value="IPv6">IPv6</option>
           </select>
           
-          <input type="text" id="hostname" class="col form-control ml-3" placeholder="host or ip" aria-label="host or ip" aria-describedby="button-addon2"></input>
+          <input type="text" name="host" id="hostname" class="col form-control ml-3" placeholder="host or ip" aria-label="host or ip" aria-describedby="button-addon2"></input>
 
           <div class="input-group-append ml-3">
             <button class="btn btn-primary" type="submit" id="runButton" onclick="">Run</button>
           </div>
+          <input type="hidden" id="custId" name="custId" value="3487">
           </form>
 
           <div class="input-group-append">
-            <div id="lodingCircle" style="display: none;"></div>
+            <div id="loadingCircle" style="display: none;"></div>
           </div>
 
         </div>
@@ -42,9 +43,9 @@
 
 
   <div class="container-fluid">
-    <div class="card" id="funcCard" style="display: none;">
+    <div class="card" id="funcCard" style="">
       <div class="embed-responsive embed-responsive-21by9 funcFrame">
-       <iframe id="funcFrame" class="embed-responsive-item " style="border-width:0px;" src="" allowtransparency="true"></iframe>
+       <iframe id="funcFrame" class="embed-responsive-item " style="border-width:0px;" src="/iframe-ready.html" allowtransparency="true" sandbox=""></iframe>
       </div>
     </div>
   </div>

@@ -1,76 +1,70 @@
 <!--import Regex scheme's -->
-<script>
-  {% include javascript/Regex.js %}
-</script>
-<!--import Modal Required scripts -->
-<script>
-  {% include javascript/server-select-modal.js %}
-</script>
+<script src="assets/js/looking-glass.js"></script>
 
 <script async>
-  var funcType,IPversion
-  $(document).ready(function(){
+  var funcType, IPVersion
+  $(document).ready(function () {
 
-  $("#funcType").change(function(){
-    funcType = $(this).children("option:selected").val()
-    $(this).find("option:selected").each(function(){
-      var hasIPVersion = $(this).attr("hasIPVersion")
-      if(hasIPVersion == "yes"){
-        $("#reqType").show();
-      } else{
-        $("#reqType").val("Default");
-        $("#reqType").hide();
-        IPversion=""
+    $("#funcType").change(function () {
+      funcType = $(this).children("option:selected").val()
+      $(this).find("option:selected").each(function () {
+        var hasIPVersion = $(this).attr("hasIPVersion")
+        if (hasIPVersion == "yes") {
+          $("#reqType").show();
+        } else {
+          $("#reqType").val("Default");
+          $("#reqType").hide();
+          IPVersion = ""
+        }
+      });
+    }).change();
+
+
+    $("#reqType").change(function () {
+      IPVersion = $(this).children("option:selected").val()
+      if (IPVersion == "Default") {
+        $('#hostname').attr('pattern', '("(' + domainRegex + ")|(" + ipv4Regex + ")|(" + ipv6Regex + ')")')
+      } else if (IPVersion == "IPv4") {
+        $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex)
+      } else {
+        $('#hostname').attr('pattern', domainRegex + "|" + ipv6Regex)
       }
-    });
-  }).change();
+    }).change();
 
-
-  $("#reqType").change(function(){
-    IPversion = $(this).children("option:selected").val()
-    if(IPversion == "Default") {
-      $('#hostname').attr('pattern', '("('+domainRegex+")|("+ipv4Regex+")|("+ipv6Regex+')")')
-    } else if (IPversion == "IPv4") {
-      $('#hostname').attr('pattern', domainRegex+"|"+ipv4Regex)
-    } else {
-      $('#hostname').attr('pattern', domainRegex+"|"+ipv6Regex)
-    }
-  }).change();
-
-  $('#hostname').attr('pattern', domainRegex+"|"+ipv4Regex+"|"+ipv6Regex)
+    $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex + "|" + ipv6Regex)
   })
 
-    $("#funcFrame").on( "load",function(){
-      $("#lodingCircle").hide()
-     });
+  $("#funcFrame").on("load", function () {
+    $("#loadingCircle").hide()
 
-     function lgRun() {
-       var svURL = $("#"+Cookies.get('SelectedServerID')).data("svurl");
-       if ( svURL && svURL != "") {
-      $("#lodingCircle").show();
-      $.ajax({
-      url: svURL+"/svCheck",
-      type : "HEAD",
-      async : true,
-      success: function( data ) {
-        $("#funcCard").show()
-       $('#funcFrame').attr('src', svURL+"/looking-glass-controller"+"?"+$("#lg_run_form").serialize())
-      },
-      error: function( data ) {
-        $("#lodingCircle").hide()
-        $('#funcFrame').attr('src', "iframe-error.html")
+    var iframe = $("#funcFrame");
+    if (iframe.innerHTML()) {
+      // get and check the Title (and H tags if you want)
+      var ifTitle = iframe.contentDocument.title;
+      if (ifTitle.indexOf("Ok") >= 0) {
+        // we have a winner! probably a 404 page!
       }
-      });
-      // $("#funcCard").show()
-       //$('#funcFrame').attr('src', svURL+"?"+$("#lg_run_form").serialize())
-       ///looking-glass-controller
-     } else {
-      $('#serverSelectModal').modal('toggle')
-     }
+    } else {
+      // didn't load
     }
-     $(function () {
-  //$('[data-toggle="tooltip"]').tooltip()
-})
+  });
+
+  function lgRun() {
+    var svURL = $("#" + Cookies.get('SelectedServerID')).data("svurl");
+    if (svURL && svURL != "") {
+      $("#loadingCircle").show();
+      $("#funcCard").show()
+      $('#funcFrame').attr('src', svURL + "/looking-glass-controller" + "?" + $("#lg_run_form").serialize())
+      // $("#funcCard").show()
+      //$('#funcFrame').attr('src', svURL+"?"+$("#lg_run_form").serialize())
+      ///looking-glass-controller
+    } else {
+      $('#serverSelectModal').modal('toggle')
+    }
+  }
+  $(function () {
+    //$('[data-toggle="tooltip"]').tooltip()
+  })
 
 </script>
 

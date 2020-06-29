@@ -1,30 +1,21 @@
 {
-    "Config": {
+    "ServerConfig": {
         "whois": "enabled",
         "nslookup": "enabled",
-        "ping": {
-            "": "enabled",
-            "4": "enabled",
-            "6": "enabled"
-        },
-        "icmp": {
-            "": "enabled",
-            "4": "enabled",
-            "6": "enabled"
-        },
-        "tracert": {
-            "": "enabled",
-            "4": "enabled",
-            "6": "enabled"
-        },
+        "ping": "enabled",
+        "icmp": "enabled",
+        "tracert": "enabled",
         "webcontrol": "enabled",
-        "tcp": "enabled"
+        "tcp": "enabled",
+        "IPv6":"enabled",
+        "IPv4":"enabled",
+        "speedtest": "enabled"
     },
     "Servers": {
         "Netherland": {
             "Name": "Netherland",
-            "Description": "Network & Cloud Research and Test Servers",
-            "Config":{
+            "Description": "Research and Test Servers",
+            "ServerConfig":{
                 "whois": "disabled",
                 "webcontrol": "disabled",
                 "tcp": "disabled"
@@ -33,8 +24,8 @@
                 "Amsterdam1": {
                     "Name" : "Amsterdam - 1",
                     "Description": "Equnix",
-                    "Url" : "https://looking-glass-controller/looking-glass-controller",
-                    "Config":{
+                    "Url" : "https://looking-glass-controller",
+                    "ServerConfig":{
                         "whois": "enabled",
                         "webcontrol": "disabled",
                         "nslookup": "disabled"
@@ -43,11 +34,101 @@
                 "Amsterdam2": {
                     "Name" : "Amsterdam - 2",
                     "Description": "Research lab",
-                    "Url" : "http://looking-glass-controller5"
+                    "ServerConfig":{
+                        "IPv6":"enabled",
+                        "IPv4":"disabled"
+                    },
+                    "Url" : "https://lg-test-ams.ahmetozer.org"
                 }
             }
         },
         "Turkey": {
+            "Name": "Turkey",
+            "Description":"Servers in Turkey",
+            "Servers":{
+                "Istanbul": {
+                    "Url":"http://looking-glass-controller1"
+                },
+                "Marmaris": {
+                    "Name": "Marmaris",
+                    "Description": "White-Door Router",
+                    "Servers": {
+                        "Marmaris1" : {
+                            "Name": "Marmaris 1",
+                            "Description": "Turknet LSN",
+                            "ServerConfig": {
+                                "whois": "enabled",
+                                "nslookup": "enabled",
+                                "ping": "disabled",
+                                "icmp": "enabled",
+                                "tracert": "enabled",
+                                "webcontrol": "enabled",
+                                "tcp": "enabled",
+                                "IPv6":"disabled",
+                                "IPv4":"enabled",
+                                "speedtest": "enabled"
+                            },
+                            "Url":"https://marmaris-ipv6.ahmetozer.org:2083"
+                        },
+                        "Marmaris2" : {
+                            "Name": "Marmaris 2",
+                            "Description": "Teredo",
+                            "Url":"http://looking-glass-controller2"
+                        },
+                        "Marmaris3" : {
+                            "Name": "Marmaris 3",
+                            "Url":"http://looking-glass-controller3"
+                        }
+                    }
+                }
+            }
+            
+        },
+        "USA": {
+            "Name": "USA",
+            "Description": "Google Cloud IPv4",
+            "Url":"http://looking-glass-controller1",
+            "ServerConfig" :{
+                "IPv6":"disabled",
+                "IPv4":"disabled"
+            }
+        },
+        "TestCountry2": {
+            "Name": "Test Country2",
+            "Description":"Servers in Turkey",
+            "Servers":{
+                "Istanbul": {
+                    "Url":"http://looking-glass-controller1",
+                    "ServerConfig" :{
+                        "IPv6":"disabled",
+                "IPv4":"enabled"
+                    }
+                    
+                },
+                "Marmaris": {
+                    "Name": "Marmaris",
+                    "Description": "White-Door Router",
+                    "Servers": {
+                        "Marmaris1" : {
+                            "Name": "Marmaris 1",
+                            "Description": "Turknet LSN",
+                            "Url":"https://marmaris-ipv6.ahmetozer.org:2083/"
+                        },
+                        "Marmaris2" : {
+                            "Name": "Marmaris 2",
+                            "Description": "Teredo",
+                            "Url":"http://looking-glass-controller2"
+                        },
+                        "Marmaris3" : {
+                            "Name": "Marmaris 3",
+                            "Url":"http://looking-glass-controller3"
+                        }
+                    }
+                }
+            }
+            
+        },
+        "Turkey3": {
             "Name": "Turkey",
             "Description":"Servers in Turkey",
             "Servers":{
@@ -77,10 +158,35 @@
             }
             
         },
-        "USA": {
-            "Name": "USA",
-            "Description": "Google Cloud IPv4",
-            "Url":"http://looking-glass-controller1"
+        "Turkey4": {
+            "Name": "Test Country4",
+            "Description":"Servers in Turkey",
+            "Servers":{
+                "Istanbul": {
+                    "Url":"http://looking-glass-controller1"
+                },
+                "Marmaris": {
+                    "Name": "Marmaris",
+                    "Description": "White-Door Router",
+                    "Servers": {
+                        "Marmaris1" : {
+                            "Name": "Marmaris 1",
+                            "Description": "Turknet LSN",
+                            "Url":"http://looking-glass-controller1"
+                        },
+                        "Marmaris2" : {
+                            "Name": "Marmaris 2",
+                            "Description": "Teredo",
+                            "Url":"http://looking-glass-controller2"
+                        },
+                        "Marmaris3" : {
+                            "Name": "Marmaris 3",
+                            "Url":"http://looking-glass-controller3"
+                        }
+                    }
+                }
+            }
+            
         }
         
     }
