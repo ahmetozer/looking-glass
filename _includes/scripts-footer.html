@@ -2,39 +2,37 @@
 <script src="assets/js/looking-glass.js"></script>
 
 <script async>
-  var funcType, IPVersion
-  $(document).ready(function () {
-
-    $("#funcType").change(function () {
-      funcType = $(this).children("option:selected").val()
-      $(this).find("option:selected").each(function () {
-        var hasIPVersion = $(this).attr("hasIPVersion")
-        if (hasIPVersion == "yes") {
-          $("#reqType").show();
+  function hasIPVersionRequired() {
+      $(".ipMayRequired").find("option:selected").each(function () {
+        if ($(this).attr("hasIPVersion") == "yes") {
+          $("#IPVersion").show();
         } else {
-          $("#reqType").val("Default");
-          $("#reqType").hide();
-          IPVersion = ""
+          $("#IPVersion").hide();
         }
       });
+    }
+
+
+    $(".ipMayRequired").change(function () {
+      hasIPVersionRequired()
     }).change();
 
 
-    $("#reqType").change(function () {
-      IPVersion = $(this).children("option:selected").val()
-      if (IPVersion == "Default") {
-        $('#hostname').attr('pattern', '("(' + domainRegex + ")|(" + ipv4Regex + ")|(" + ipv6Regex + ')")')
-      } else if (IPVersion == "IPv4") {
+    $("#IPVersion").change(function () {
+      switch($(this).children("option:selected").val()) {
+      case "Default": {
+        $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex + "|" + ipv6Regex)
+      } 
+      case "IPv4": {
         $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex)
-      } else {
+      }
+      case "IPv6":{
         $('#hostname').attr('pattern', domainRegex + "|" + ipv6Regex)
       }
+    }
     }).change();
 
-    $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex + "|" + ipv6Regex)
-  })
-
-  $("#funcFrame").on("load", function () {
+    $("#funcFrame").on("load", function () {
     $("#loadingCircle").hide()
 
     var iframe = $("#funcFrame");
@@ -62,9 +60,6 @@
       $('#serverSelectModal').modal('toggle')
     }
   }
-  $(function () {
-    //$('[data-toggle="tooltip"]').tooltip()
-  })
 
 </script>
 

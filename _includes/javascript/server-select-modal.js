@@ -46,12 +46,23 @@ function svApplyConfig(config) {
   } else {
     $("#lgSVconFIPvDefault").prop('disabled', false);
   }
-  $(".autoSelected option").each(function(){
-    $(this, 'option:selected').removeAttr('selected');
-    $(this).not('[disabled]:first').attr('selected','selected');
+  autoSelectOptions()
+  hasIPVersionRequired()
+}
+function autoSelectOptions() {
+  $(".autoSelected").each(function(){
+    //console.log($(this).attr('name'), $(this).val())
+    if ($(this).val() == null) {
+        //console.log("null best val", $(this).find("option").not('[disabled]').first().val())
+        $(this).val($(this).find("option").not('[disabled]').first().val());
+    } else {
+      if (currentServerConfig[$(this).val()] != "enabled") {   
+        //console.log("this settings is disabled for " + $(this).attr('name') + $(this).val())
+        $(this).find("option:selected").each(function(){$(this).removeAttr('selected');});
+        $(this).val($(this).find("option").not('[disabled]').first().val());
+      }
+    }
   });
-  
-
 }
 
 //
