@@ -5,7 +5,7 @@
    <!--  <div class="card lg-blur"> -->
       <div class="card card-body">
         <div class="input-group">
-          <form action="javascript:lgRun();" id="lg_run_form" autocomplete="off" class="col form-inline">
+          <form action="javascript:lgIframeRun();" id="lg_run_form" autocomplete="off" class="col form-inline">
           <div class="input-group-prepend">
             <label class="input-group-text d-none d-lg-block" for="funcType">Command</label>
           </div>
@@ -28,7 +28,7 @@
           <div class="input-group-append ml-3">
             <button class="btn btn-primary" type="submit" id="runButton" onclick="">Run</button>
           </div>
-          <input type="hidden" id="custId" name="custId" value="3487">
+          <input type="hidden" id="isMobile" name="isMobile" value="0">
           </form>
 
           <div class="input-group-append">
@@ -41,9 +41,8 @@
   </div>
   <br class="bg-transparent"/>
 
-
   <div class="container-fluid">
-    <div class="card" id="funcCard" style="">
+    <div class="card" id="funcCard">
       <div class="embed-responsive embed-responsive-21by9 funcFrame">
        <iframe id="funcFrame" class="embed-responsive-item " style="border-width:0px;" src="/iframe-ready.html" allowtransparency="true" sandbox=""></iframe>
       </div>
