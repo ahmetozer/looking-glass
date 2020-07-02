@@ -63,6 +63,7 @@ function autoSelectOptions() {
       }
     }
   });
+  applyIPVersionRegex()
 }
 
 //

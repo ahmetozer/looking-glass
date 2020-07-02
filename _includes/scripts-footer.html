@@ -11,15 +11,8 @@
         }
       });
     }
-
-
-    $(".ipMayRequired").change(function () {
-      hasIPVersionRequired()
-    }).change();
-
-
-    $("#IPVersion").change(function () {
-      switch($(this).children("option:selected").val()) {
+    function applyIPVersionRegex() {
+      switch($("#IPVersion").children("option:selected").val()) {
       case "Default": {
         $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex + "|" + ipv6Regex)
       } 
@@ -30,6 +23,15 @@
         $('#hostname').attr('pattern', domainRegex + "|" + ipv6Regex)
       }
     }
+    }
+
+    $(".ipMayRequired").change(function () {
+      hasIPVersionRequired()
+    }).change();
+
+
+    $("#IPVersion").change(function () {
+      applyIPVersionRegex()
     }).change();
 
     $("#funcFrame").on("load", function () {
