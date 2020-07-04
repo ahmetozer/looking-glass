@@ -40,6 +40,7 @@ $("#IPVersion").change(function () {
 
 $("#funcFrame").on("load", function () {
   $("#loadingCircle").hide()
+  resizeIframe(this,$(".funcFrame"))
 });
 
 
@@ -50,9 +51,15 @@ function lgIframeRun() {
   var svURL = $("#" + Cookies.get('SelectedServerID')).data("svurl");
   if (svURL && svURL != "") {
     $("#loadingCircle").show();
+    $('#runButton').prop('disabled', true);
     $("#funcCard").show()
     $('#funcFrame').attr('src', svURL + "/looking-glass-controller" + "?" + $("#lg_run_form").serialize())
   } else {
     $('#serverSelectModal').modal('toggle')
   }
+  setTimeout(() => {  $('#runButton').prop('disabled', false); }, 1200);
+}
+
+function resizeIframe(obj,obj2) {
+  obj2.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
 }
