@@ -1,6 +1,6 @@
 {%- include header.html -%}
 <main role=" main">
-  <div class="container-fluid ">
+  <div class="container">
     <!-- Page Heading -->
    <!--  <div class="card lg-blur"> -->
       <div class="card card-body">
@@ -26,7 +26,7 @@
           <input type="text" name="host" id="hostname" class="col form-control ml-3" placeholder="host or ip" aria-label="host or ip" aria-describedby="button-addon2" required></input>
 
           <div class="input-group-append ml-3">
-            <button class="btn btn-primary" type="submit" id="runButton" onclick="">Run</button>
+            <button class="btn btn-primary" type="submit" id="runButton">Run</button>
           </div>
           <input type="hidden" id="isMobile" name="isMobile" value="0">
           </form>
@@ -41,10 +41,10 @@
   </div>
   <br class="bg-transparent"/>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="card" id="funcCard">
-      <div class="embed-responsive embed-responsive-21by9 funcFrame">
-       <iframe id="funcFrame" class="embed-responsive-item " style="border-width:0px;" src="/iframe-ready.html" allowtransparency="true" sandbox=""></iframe>
+      <div class="embed-responsive funcFrame">
+       <iframe id="funcFrame" class="embed-responsive-item " style="border-width:0px;" src="/iframe-ready.html" allowtransparency="true" ></iframe>
       </div>
     </div>
   </div>

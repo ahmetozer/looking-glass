@@ -1,8 +1,8 @@
 <body>
   <nav class="site-header navbar navbar-expand-md navbar-dark fixed-top ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{ site.company.url }}">
-        <img src="/assets/images/looking-glass-icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+      <a class="navbar-brand" href="{{ site.url}}">
+        <img src="{{ site.url}}/assets/images/looking-glass-icon.svg" width="30" height="30" class="d-inline-block align-top" alt="{{ site.description }}">
         {{ site.title }}
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -26,18 +26,24 @@
   {% if site.company.logo != nil %}
   {% if site.company.logo != "" %}
   </br>
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-auto">
         <div class="card card-body">
-          <img width="300" class="align-self-center" alt="{{ site.company.title }}" src="{{ site.company.logo }}"></img>
+          <a href="{{ site.company.url }}" >
+            <img width="300" class="align-self-center" alt="{{ site.company.title }}" src="{{ site.company.logo }}"></img>
+          </a>
         </div>
       </div>
       <div class="col">
         <!-- <div class="d-block d-sm-block d-md-none " style="margin-top: 10px;"></div> -->
         <div class="card my-auto d-none d-md-block" style="height:100%;">
           <div class="card-body align-self-center" style="margin-top: auto; margin-bottom: auto;">
-            {{page.description}}
+            {% if page.description  and page.description != nil and page.description != "" %}
+              {{page.description}}
+            {% else %}
+              {{site.description}}
+            {% endif %}
           </div>
         </div>
       </div>
