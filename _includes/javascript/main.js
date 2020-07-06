@@ -40,7 +40,6 @@ $("#IPVersion").change(function () {
 
 $("#funcFrame").on("load", function () {
   $("#loadingCircle").hide()
-  resizeIframe(this,$(".funcFrame"))
 });
 
 
@@ -58,8 +57,4 @@ function lgIframeRun() {
     $('#serverSelectModal').modal('toggle')
   }
   setTimeout(() => {  $('#runButton').prop('disabled', false); }, 1200);
-}
-
-function resizeIframe(obj,obj2) {
-  obj2.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
 }

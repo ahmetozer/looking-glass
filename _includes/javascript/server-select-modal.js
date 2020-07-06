@@ -37,14 +37,19 @@ function svApplyConfig(config) {
   for (confIndex in config) {
     if (config[confIndex] == "enabled") {
       $("#lgSVconF"+confIndex).prop('disabled', false);
+      $("#lgSVconF"+confIndex).removeClass("d-none");
     } else {
       $("#lgSVconF"+confIndex).prop('disabled', true);
+      $("#lgSVconF"+confIndex).addClass("d-none");
     }
   }
   if (config["IPv4"] != "enabled" || config["IPv6"] != "enabled") {
-    $("#lgSVconFIPvDefault").prop('disabled', true);
+    $("#lgSVconFIPvDefault")
+      .prop('disabled', true)
+      .addClass("d-none");
   } else {
-    $("#lgSVconFIPvDefault").prop('disabled', false);
+    $("#lgSVconFIPvDefault").prop('disabled', false)
+    .removeClass("d-none");
   }
   autoSelectOptions()
   hasIPVersionRequired()

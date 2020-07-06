@@ -25,6 +25,7 @@
                     "Name" : "Amsterdam - 1",
                     "Description": "Equnix",
                     "Url" : "https://looking-glass-controller",
+                    "ASN" : "AS12735",
                     "ServerConfig":{
                         "whois": "enabled",
                         "webcontrol": "disabled",
