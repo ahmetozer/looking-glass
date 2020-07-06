@@ -219,6 +219,10 @@ if ( depth != null && typeof depth == "object" ) {
       var listIcons = ""
       var serverDisabled = ""
       
+      if( data[index]["ASN"]) {
+        listIcons = listIcons + '	&nbsp; <span class="badge badge-light">'+data[index]["ASN"]+'</span> '
+      }
+
       if(curConfig["IPv4"] == "enabled" || curConfig["IPv6"] == "enabled") {
         if (curConfig["IPv4"] == "enabled" && curConfig["IPv6"] == "enabled") {
           listIcons = listIcons + '<font class="server-list-feature-icons text-success" data-toggle="tooltip" data-placement="top" title="IPv4 and IPv6 Connection">DS</font>'
@@ -231,10 +235,10 @@ if ( depth != null && typeof depth == "object" ) {
       } else {
         serverDisabled = "disabled"
       }
-      if(curConfig["speedtest"] == "enabled") {
-        listIcons = listIcons + '<i class="fas fa-tachometer-alt server-list-feature-icons text-dark" data-toggle="tooltip" data-placement="top" title="SpeedTest"></i>'
-      }
-
+      // Currently SpeedTest Service is not avaible.
+      // if(curConfig["speedtest"] == "enabled") {
+      //   listIcons = listIcons + '<i class="fas fa-tachometer-alt server-list-feature-icons text-dark" data-toggle="tooltip" data-placement="top" title="SpeedTest"></i>'
+      // }
       if(curConfig["tracert"] == "enabled") {
         listIcons = listIcons + '<i class="fas fa-road server-list-feature-icons text-muted" data-toggle="tooltip" data-placement="top" title="TraceRoute"></i>'
       }
