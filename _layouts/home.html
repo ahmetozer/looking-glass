@@ -10,17 +10,23 @@
             <label class="input-group-text d-none d-lg-block" for="funcType">Command</label>
           </div>
 
-          <select class="custom-select ml-3 col-lg-2 autoSelected ipMayRequired" name="funcType" id="funcType">
+          <select class="custom-select ml-3 col-lg-2 autoSelected hasRequirement" name="funcType" id="funcType">
             <option id="lgSVconFping" value="ping" hasIPversion="yes" >Ping</option>
             <option id="lgSVconFtracert" value="tracert" hasIPversion="yes">Tracert</option>
             <option id="lgSVconFnslookup" value="nslookup">Nslookup</option>
             <option id="lgSVconFwhois" value="whois">Whois</option>
+            <option id="lgSVconFcurl" value="curl" hasIPversion="yes" hasreqScheme="yes">Curl</option>
           </select>
 
           <select class="custom-select col-lg-2 ml-3 autoSelected" name="IPVersion" id="IPVersion">
             <option id="lgSVconFIPvDefault" value="IPvDefault">default</option>
             <option id="lgSVconFIPv4" value="IPv4">IPv4</option>
             <option id="lgSVconFIPv6" value="IPv6">IPv6</option>
+          </select>
+
+          <select class="custom-select col-lg-2 ml-3 autoSelected" name="reqScheme" id="reqScheme">
+            <option id="lgSVconFschemeHttps" value="https">https</option>
+            <option  id="lgSVconFschemeHttp" value="http">http</option>
           </select>
           
           <input type="text" name="host" id="hostname" class="col form-control ml-3" placeholder="host or ip" aria-label="host or ip" aria-describedby="button-addon2" required></input>
@@ -44,7 +50,7 @@
   <div class="container">
     <div class="card" id="funcCard">
       <div class="embed-responsive funcFrame">
-       <iframe id="funcFrame" class="embed-responsive-item " style="border-width:0px;" src="/iframe-ready.html" allowtransparency="true" ></iframe>
+       <iframe id="funcFrame" class="embed-responsive-item " style="border-width:0px;" sandbox="" src="/iframe-ready.html" allowtransparency="true" ></iframe>
       </div>
     </div>
   </div>
