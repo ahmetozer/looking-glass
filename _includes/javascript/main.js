@@ -66,7 +66,7 @@ function isMobile() {
 
 // Iframe RUN
 function lgIframeRun() {
-  var svURL = $("#" + Cookies.get('SelectedServerID')).data("svurl");
+  var svURL = $("#" + localStorage.SelectedServerID).data("svjson")["Url"];
   // Check if server is selected or not. If not show server select modal
   if (svURL && svURL != "") {
     $("#loadingCircle").show();
@@ -78,6 +78,37 @@ function lgIframeRun() {
   }
   // Active button.
   setTimeout(() => { $('#runButton').prop('disabled', false); }, 1200);
+}
+
+function svTableFill(objId) {
+  $("#pageDescr").hide()
+  $("#svDescr").show()
+  $(".serverLocation").html($(objId).data("svloc"))
+  var svjson = $(objId).data("svjson")
+  var svInfos = ['Description', 'IPV4Address', 'IPV6Address', "ASN"];
+  svInfos.forEach(function (item) {
+    if (svjson[item] != null && svjson[item] != "") {
+      $(".server" + item).html(svjson[item])
+    } else {
+      $(".server" + item).html("∅")
+    }
+  });
+  var svInfos = ['ping', 'tracert', 'nslookup', "curl", "whois"];
+  var tempArr = [];
+  svInfos.forEach(function (item) {
+    if (currentServerConfig[item] == "enabled") {
+      tempArr.push(item)
+    }
+  });
+  var tempString = ""
+  for (item2 in tempArr) {
+    if (tempString == "") {
+      tempString = tempArr[item2]
+    } else {
+      tempString = tempString + "," + tempArr[item2]
+    }
+  }
+  $(".serverServices").html(tempString)
 }
 
 

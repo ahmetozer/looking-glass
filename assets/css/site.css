@@ -99,3 +99,15 @@ margin-bottom: 56px; /* footer height + 4 */
 
   }
 }
+
+.company-logo {
+  max-width: 500px;
+  max-height: 120px;
+}
+
+#svDescr {
+  padding: 0px;
+}
+#svInfoTable {
+  margin-bottom: 0px;
+}

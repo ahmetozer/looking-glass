@@ -10,7 +10,7 @@ function listAllToggleToShow() {
       .removeClass('btn-outline-info')
       .addClass('btn-outline-warning');
   } else {
-    var itemId = Cookies.get('SelectedServerID')
+    var itemId = localStorage.SelectedServerID
     if (itemId != null && itemId != "") {
       $('.collapse').not($('#' + itemId).parents()).collapse('hide')
       $('#' + itemId).parents().collapse('show')
@@ -28,7 +28,7 @@ function listAllToggleToShow() {
 
 // Clear Server Selection
 function ListServerSelectDelete() {
-  Cookies.remove('SelectedServerID')
+  localStorage.removeItem('SelectedServerID')
   svButtonLoadSave()
 }
 
@@ -51,6 +51,7 @@ function svApplyConfig(config) {
     $("#lgSVconFIPvDefault").prop('disabled', false)
       .removeClass("d-none");
   }
+  svTableFill($("#"+localStorage.SelectedServerID))
   // after applying config run auto selection.
   autoSelectOptions()
 }
@@ -104,10 +105,14 @@ function svButtonTrigger() {
         showAllListStat = "no"
       }
       $('.lgserver').removeClass('list-group-item-info')
-      Cookies.set('SelectedServerID', $(this).attr('id'))
+      // Save current server info to local disk
+      localStorage.setItem("SelectedServerID",$(this).attr('id'))
+      //change button info
       $("#serverSelectButton").html($(this).data("svname"));
+      // Apply config
       currentServerConfig = $(this).data("svconf");
       svApplyConfig(currentServerConfig);
+
       //svApplyConfig($(this).data( "svconf" ))
       $('#serverSelectButton').addClass('btn-outline-light').removeClass('btn-outline-danger');
       $(this)
@@ -145,6 +150,21 @@ function arrToDashString(incomingArray) {
       tempString = incomingArray[item]
     } else {
       tempString = tempString + "-" + incomingArray[item]
+    }
+
+  }
+  //console.log(tempString)
+  return tempString
+}
+
+function arrToDotString(incomingArray) {
+  //return
+  var tempString = ""
+  for (item in incomingArray) {
+    if (tempString == "") {
+      tempString = incomingArray[item]
+    } else {
+      tempString = tempString + "." + incomingArray[item]
     }
 
   }
@@ -207,7 +227,6 @@ function lgServerListLoad(data, Config, depth) {
       //console.log("This is a server "+lgSvName,tempDepth) // for debugging
       var listIcons = ""
       var serverDisabled = ""
-
       if (data[index]["ASN"]) {
         listIcons = listIcons + '	&nbsp; <span class="badge badge-light">' + data[index]["ASN"] + '</span> '
       }
@@ -231,7 +250,7 @@ function lgServerListLoad(data, Config, depth) {
       if (curConfig["tracert"] == "enabled") {
         listIcons = listIcons + '<i class="fas fa-road server-list-feature-icons text-muted" data-toggle="tooltip" data-placement="top" title="TraceRoute"></i>'
       }
-      $("#" + arrToDashString(depth)).append(`<button class="server-list-group-item list-group-item list-group-item-action btn btn-light lgserver"` + serverDisabled + ` data-svurl='` + data[index]["Url"] + `' data-svName='` + lgSvName + `' data-svconf='` + JSON.stringify(curConfig) + `' id="` + arrToDashString(tempDepth) + `"><i class="fas fa-server text-primary"></i>` + lgSvName +
+      $("#" + arrToDashString(depth)).append(`<button class="server-list-group-item list-group-item list-group-item-action btn btn-light lgserver"` + serverDisabled + ` data-svjson='` + JSON.stringify(data[index]) + `' data-svName='` + lgSvName + `' data-svloc='`+arrToDotString(tempDepth).replace("serverList.", "")+`' data-svconf='` + JSON.stringify(curConfig) + `' id="` + arrToDashString(tempDepth) + `"><i class="fas fa-server text-primary"></i>` + lgSvName +
         listIcons +
         `<small class="text-muted float-right">` + lgSVDescription + `</small></button>`);
 
@@ -250,10 +269,11 @@ function lgServerListLoadAjax(URL, curIndex) {
     url: URL,
     dataType: 'json',
     success: function (data) {
+      localStorage.setItem("server_js", JSON.stringify(data));
       lgServerListLoad(data["Servers"], data["ServerConfig"], ["serverList"]);
       // After getting server data, start button services.
       svButtonTrigger();
-      svButtonLoadSave(Cookies.get('SelectedServerID'))
+      svButtonLoadSave(localStorage.SelectedServerID)
       $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
@@ -268,4 +288,11 @@ function lgServerListLoadAjax(URL, curIndex) {
     }
   });
 }
-lgServerListLoadAjax("server.json", 0);
+if (typeof(Storage) !== "undefined") {
+  // Code for localStorage/sessionStorage.
+  lgServerListLoadAjax("server.json", 0);
+} else {
+  // Sorry! No Web Storage support..
+  $('#serverSelectButton').prop('disabled', true);
+  $("#serverSelectButton").html("Sorry! No Web Storage support.");
+}

@@ -28,23 +28,52 @@
   </br>
   <div class="container">
     <div class="row">
-      <div class="col-md-auto">
+      <div class="col-lg-auto">
         <div class="card card-body">
-          <a href="{{ site.company.url }}" >
-            <img width="300" class="align-self-center" alt="{{ site.company.title }}" src="{{ site.company.logo }}"></img>
+          <a href="{{ site.company.url }}" class="align-self-center">
+            <img class="company-logo" alt="{{ site.company.title }}" src="{{ site.company.logo }}"></img>
           </a>
         </div>
       </div>
       <div class="col">
         <!-- <div class="d-block d-sm-block d-md-none " style="margin-top: 10px;"></div> -->
-        <div class="card my-auto d-none d-md-block" style="height:100%;">
-          <div class="card-body align-self-center" style="margin-top: auto; margin-bottom: auto;">
+        <div class="card my-auto d-none d-lg-block" style="height:100%;">
+           <div class="card-body align-self-center" id="pageDescr" style="margin-top: auto; margin-bottom: auto;">
             {% if page.description  and page.description != nil and page.description != "" %}
               {{page.description}}
             {% else %}
               {{site.description}}
             {% endif %}
           </div>
+          <div class="card-body align-self-center" id="svDescr" style="margin-top: auto; margin-bottom: auto; display: none;">
+            <div class="table-responsive">
+            <table class="table table-borderless" id="svInfoTable">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Loc.</th>
+                  <th class="serverLocation"></th>
+                  <th>Descr.</th>
+                  <th class="serverDescription"></th>
+                </tr>
+                <tr>
+              </thead>
+              <tbody>
+                  <th scope="row">IPv4</th>
+                  <td class="serverIPV4Address"></td>
+                  <th scope="row">IPv6</th>
+                  <td class="serverIPV6Address"></td>
+                </tr>
+                <tr>
+                  <th scope="row">ASN</th>
+                  <td class="serverASN"></td>
+                  <th scope="row">Services</th>
+                  <td class="serverServices"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+
         </div>
       </div>
     </div>
