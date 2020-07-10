@@ -100,14 +100,22 @@ margin-bottom: 56px; /* footer height + 4 */
   }
 }
 
+.upRowCards {
+  height: 160px;
+}
 .company-logo {
-  max-width: 500px;
-  max-height: 120px;
+  max-width: 100%;
+  height: 100%;
 }
 
-#svDescr {
+.svDescr {
   padding: 0px;
 }
-#svInfoTable {
+.svInfoTable {
   margin-bottom: 0px;
+}
+
+.textCenter {
+  margin-top: auto;
+  margin-bottom: auto;
 }

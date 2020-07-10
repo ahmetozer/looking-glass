@@ -2,7 +2,8 @@
   <nav class="site-header navbar navbar-expand-md navbar-dark fixed-top ">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{ site.url}}">
-        <img src="{{ site.url}}/assets/images/looking-glass-icon.svg" width="30" height="30" class="d-inline-block align-top" alt="{{ site.description }}">
+        <img src="{{ site.url}}/assets/images/looking-glass-icon.svg" width="30" height="30"
+          class="d-inline-block align-top" alt="{{ site.description }}">
         {{ site.title }}
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -22,63 +23,64 @@
     </div>
   </nav>
 
-  {% if site.company.logo %}
-  {% if site.company.logo != nil %}
-  {% if site.company.logo != "" %}
   </br>
   <div class="container">
     <div class="row">
+
       <div class="col-lg-auto">
-        <div class="card card-body">
-          <a href="{{ site.company.url }}" class="align-self-center">
-            <img class="company-logo" alt="{{ site.company.title }}" src="{{ site.company.logo }}"></img>
+        <div class="card card-body upRowCards">
+          <a href="{{ site.company.url }}" class="company-logo align-self-center">
+            {% if site.company.logo  and site.company.logo != nil and site.company.logo != "" %}
+            <img class="company-logo" alt="{{ site.company.name }}" src="{{ site.company.logo }}"></img>
+            {% else %}
+            <div class="card-body align-self-center textCenter">
+              <h1>{{ site.company.name }}</h1>
+            </div>
+            {% endif %}
           </a>
         </div>
       </div>
       <div class="col">
         <!-- <div class="d-block d-sm-block d-md-none " style="margin-top: 10px;"></div> -->
         <div class="card my-auto d-none d-lg-block" style="height:100%;">
-           <div class="card-body align-self-center" id="pageDescr" style="margin-top: auto; margin-bottom: auto;">
+          <div class="card-body align-self-center textCenter" id="pageDescr">
             {% if page.description  and page.description != nil and page.description != "" %}
-              {{page.description}}
+            {{page.description}}
             {% else %}
-              {{site.description}}
+            {{site.description}}
             {% endif %}
           </div>
-          <div class="card-body align-self-center" id="svDescr" style="margin-top: auto; margin-bottom: auto; display: none;">
+          <div class="card-body align-self-center svDescr" style="display: none;">
             <div class="table-responsive">
-            <table class="table table-borderless" id="svInfoTable">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Loc.</th>
-                  <th class="serverLocation"></th>
-                  <th>Descr.</th>
-                  <th class="serverDescription"></th>
-                </tr>
-                <tr>
-              </thead>
-              <tbody>
+              <table class="table table-borderless" id="svInfoTable">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Loc.</th>
+                    <td class="serverLocation"></td>
+                    <th>Descr.</th>
+                    <td class="serverDescription"></td>
+                  </tr>
+                  <tr>
+                </thead>
+                <tbody>
                   <th scope="row">IPv4</th>
                   <td class="serverIPV4Address"></td>
                   <th scope="row">IPv6</th>
                   <td class="serverIPV6Address"></td>
-                </tr>
-                <tr>
-                  <th scope="row">ASN</th>
-                  <td class="serverASN"></td>
-                  <th scope="row">Services</th>
-                  <td class="serverServices"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  </tr>
+                  <tr>
+                    <th scope="row">ASN</th>
+                    <td class="serverASN"></td>
+                    <th scope="row">Services</th>
+                    <td class="serverServices"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
         </div>
       </div>
     </div>
   </div>
-  {% endif %}
-  {% endif %}
-  {% endif %}
   </br>
