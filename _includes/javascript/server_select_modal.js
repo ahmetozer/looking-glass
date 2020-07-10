@@ -126,19 +126,17 @@ function svButtonTrigger() {
 // Compare Nested Configs with Recursive , "svConfigComparisor"
 function svConfigComparisor(oldConfig, newConfig) {
   var tempConfig = { ...oldConfig };
+  var tempConfig2 = { ...newConfig };
   for (confIndex in oldConfig) {
     //console.log("index = "+index)
-    if (typeof oldConfig[confIndex] == "object" && typeof newConfig[confIndex] == "object") {
-      tempConfig[confIndex] = svConfigComparisor(oldConfig[confIndex], newConfig[confIndex])
+    if (typeof oldConfig[confIndex] == "object" && typeof tempConfig2[confIndex] == "object") {
+      tempConfig[confIndex] = svConfigComparisor(oldConfig[confIndex], tempConfig2[confIndex])
     } else {
       if (newConfig[confIndex]) {
-        tempConfig[confIndex] = newConfig[confIndex]
-      } else {
-        tempConfig[confIndex] = oldConfig[confIndex]
+        tempConfig[confIndex] = tempConfig2[confIndex]
       }
     }
   }
-
   return tempConfig
 }
 // End of the "svConfigComparisor"
@@ -270,7 +268,7 @@ function lgServerListLoadAjax(URL, curIndex) {
     dataType: 'json',
     success: function (data) {
       localStorage.setItem("server_js", JSON.stringify(data));
-      lgServerListLoad(data["Servers"], data["ServerConfig"], ["serverList"]);
+      lgServerListLoad(data["Servers"], svConfigComparisor(default_server_config["ServerConfig"], data["ServerConfig"]), ["serverList"]);
       // After getting server data, start button services.
       svButtonTrigger();
       svButtonLoadSave(localStorage.SelectedServerID)
