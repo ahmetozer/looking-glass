@@ -39,12 +39,12 @@ function autoSelectOptions() {
 
 // Look to requirements.
 function hasARequirement() {
-  $(".hasRequirement").find("option:selected").each(function () {
+  $(".hasARequirement").find("option:selected").each(function () {
     if ($(this).attr("hasIPVersion") == "yes") {
       applyIPVersionRegex($("#IPVersion").show().val())
     } else {
       $("#IPVersion").hide();
-      applyIPVersionRegex("Default")
+      applyIPVersionRegex("IPvDefault")
     }
     if ($(this).attr("hasreqScheme") == "yes") {
       $("#reqScheme").show();
@@ -118,7 +118,7 @@ $(document).ready(function () {
     $("#isMobile").val("1");
   }
 
-  $(".ipMayRequired").change(function () {
+  $(".hasARequirement").change(function () {
     hasARequirement()
   }).change();
 
