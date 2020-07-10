@@ -1,0 +1,28 @@
+{%- include head.html -%}
+{%- include scripts.html -%}
+{%- include header.html -%}
+
+<div id="wrap">
+  <!-- Navigation -->
+  <div class="container">
+    <!-- Page Heading -->
+    <h1 class="my-4">{{page.title}} |
+      <small>{{page.exp}}</small>
+    </h1>
+  </div>
+
+
+
+  <section id="about" class="pagecontent">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 mx-auto">
+          {{ page.content }}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{%- include footer.html -%}
+{%- include scripts-footer.html -%}
