@@ -1,16 +1,26 @@
 <footer class="footer-sc site-header fixed-bottom footer mt-auto py-2">
 
-      <div class="row">
-        <div class="col">
-          <a style="color: aliceblue;" class="align-self-center" href="https://lg.ahmetozer.org">	&nbsp; 	&nbsp; &copy; Looking Glass 2017-{{ 'now' | date: "%Y" }}</a>
-        </div>
-        <div class="col ">
-          <button href="/my.html" type="button" class="btn btn-outline-danger btn-sm" aria-pressed="true" data-toggle="modal" data-target="#serverSelectModal"  data-placement="left" title="Select a Server" id="serverSelectButton">Please Select Server</button>
-        </div>
-        <div class="col d-none d-md-block">
-          <a href="https://github.com/ahmetozer/looking-glass" class="" >This is Version 3 and currently in development process.</a>
-        </div>
-      </div>
-</footer> 
-  {%- include scripts-footer.html -%}
+  <div class="row">
+    <div class="col">
+      <a class="align-self-center text-white" href="https://github.com/ahmetozer/looking-glass"> &nbsp;
+        &nbsp; &copy; Looking Glass 2017-{{ 'now' | date: "%Y" }}</a>
+    </div>
+    <div class="col ">
+      <button type="button" class="btn btn-outline-danger btn-sm" aria-pressed="true" data-toggle="modal"
+        data-target="#serverSelectModal" data-placement="left" title="Select a Server" id="serverSelectButton">Please
+        Select Server</button>
+    </div>
+    {% if site.footer.text  and site.footer.text != nil and site.footer.text != "" %}
+    <div class="col d-none d-md-block">
+      {% if site.footer.link  and site.footer.link != nil and site.footer.link != "" %}
+      <a href="{{ site.footer.link }}" class="text-white">{{ site.footer.text }}</a>
+      {% else %}
+      <p class="text-white">{{ site.footer.text }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</footer>
+{%- include scripts-footer.html -%}
+
 </html>

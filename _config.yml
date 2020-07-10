@@ -1,0 +1,60 @@
+######
+#   Looking Glass Service
+#
+#   github.com/ahmetozer/looking-glass
+#   ahmetozer.org
+#
+#   This is your site configuration file
+######
+
+#   Site Main Title
+title: Looking Glass
+
+#   Description of your web site
+# it`s also seen before selecting server.
+description: >- 
+  Welcome to Example Company's Network Looking Glass. The information provided by and the support of this service are on a best effort basis. These are some of our Servers at main locations within our network. You can inspect our network with this webpage.
+
+# This is your website url. Please a give right url. Assets are use this URL.
+url: "https://lg.ahmetozer.org" 
+#permalink:              /page/:title:output_ext
+permalink:               pretty
+
+# jekyll bind addr
+#host:                 0.0.0.0
+
+# Give information about Your company
+company:
+  url:                  https://www.dijitaller.com
+  name:                 Dijitaller
+  logo:                 dijitaller-demo-logo.png
+
+# This is footer link. You can also just write only text.
+footer:
+  text: Other Projets
+  link: https://github.com/ahmetozer
+  
+
+# Navbar Links
+# At max 7 Item
+navbarLinks:
+  - one:
+    name: "Link1"
+    link:  "#Link1"
+  - two:
+    name: "Link2"
+    link:  "#Link2"
+  - three:
+    name: "Link3"
+    link:  "#Link3"
+  - four:
+    name: "Link4"
+    link:  "#Link4"
+
+
+# Build settings
+markdown:               kramdown
+kramdown:
+  entity_output: numeric
+plugins:
+  - jekyll-sitemap
