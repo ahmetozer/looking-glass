@@ -82,7 +82,7 @@ function lgIframeRun() {
 
 function svTableFill(objId) {
   $("#pageDescr").hide()
-  $("#svDescr").show()
+  $(".svDescr").show()
   $(".serverLocation").html($(objId).data("svloc"))
   var svjson = $(objId).data("svjson")
   var svInfos = ['Description', 'IPV4Address', 'IPV6Address', "ASN"];
@@ -90,7 +90,7 @@ function svTableFill(objId) {
     if (svjson[item] != null && svjson[item] != "") {
       $(".server" + item).html(svjson[item])
     } else {
-      $(".server" + item).html("∅")
+      $(".server" + item).html("")//∅
     }
   });
   var svInfos = ['ping', 'tracert', 'nslookup', "curl", "whois"];
