@@ -16,16 +16,16 @@ gem "jekyll"
 
 # If you have any plugins, put them here!
  group :jekyll_plugins do
-   gem "jekyll-feed"
-   gem "jekyll-gist"
-   gem "jekyll-optional-front-matter"
-   gem "jekyll-paginate"
-   gem "jekyll-readme-index"
-   gem "jekyll-relative-links"
-   gem "jekyll-seo-tag"
+   #gem "jekyll-feed"
+   #gem "jekyll-gist"
+   #gem "jekyll-optional-front-matter"
+   #gem "jekyll-paginate"
+   #gem "jekyll-readme-index"
+   #gem "jekyll-relative-links"
+   #gem "jekyll-seo-tag"
    gem "jekyll-sitemap"
-   gem "jekyll-titles-from-headings"
-   gem 'jekyll-redirect-from'
+   #gem "jekyll-titles-from-headings"
+   #gem 'jekyll-redirect-from'
  end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

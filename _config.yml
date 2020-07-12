@@ -25,9 +25,9 @@ permalink:               pretty
 
 # Give information about Your company
 company:
-  url:                  https://www.dijitaller.com
-  name:                 Dijitaller
-  logo:                 dijitaller-demo-logo.png
+  url:                  https://www.example.com
+  name:                 Example Company
+  logo:                 
 
 # This is footer link. You can also just write only text.
 footer:
