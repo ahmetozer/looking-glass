@@ -1,5 +1,9 @@
 <!--import Javascript`s  | files stored at _includes/javascript -->
+{% if site.debug == "yes" %}
+<script src="{{ site.url}}/assets/javascript/lg.js?{{ page.date | date: "s" }}"></script>
+{% else %}
 <script src="{{ site.url}}/assets/javascript/lg_min.js"></script>
+{% endif %}
 <!-- To enable bootstrap tooltip -->
 <script>
   $(function () {
