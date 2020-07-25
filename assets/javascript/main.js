@@ -66,14 +66,15 @@ function isMobile() {
 
 // Iframe RUN
 function lgIframeRun() {
-  var svURL = $("#" + localStorage.SelectedServerID).data("svjson")["Url"];
   // Check if server is selected or not. If not show server select modal
-  if (svURL && svURL != "") {
+  if (localStorage.SelectedServerID && localStorage.SelectedServerID != "") {
+    var svURL = $("#" + localStorage.SelectedServerID).data("svjson")["Url"];
     $("#loadingCircle").show();
     $('#runButton').prop('disabled', true); // Deactive form to prevent many request.
     $("#funcCard").show()
     $('#funcFrame').attr('src', svURL + "/looking-glass-controller" + "?" + $("#lg_run_form").serialize())
   } else {
+    console.log("Server secilmemis, modal gosterilecek")
     $('#serverSelectModal').modal('toggle')
   }
   // Active button.
@@ -90,10 +91,10 @@ function svTableFill(objId) {
     if (svjson[item] != null && svjson[item] != "") {
       $(".server" + item).html(svjson[item])
     } else {
-      $(".server" + item).html("")//∅
+      $(".server" + item).html('<font class="text-secondary" style="opacity: 0.5">Unspecified</font>')//∅
     }
   });
-  var svInfos = ['ping', 'tracert', 'nslookup', "curl", "whois"];
+  var svInfos = ['ping', 'tracert', 'nslookup', "curl", "whois", "mtr"];
   var tempArr = [];
   svInfos.forEach(function (item) {
     if (currentServerConfig[item] == "enabled") {
