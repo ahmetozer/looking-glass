@@ -64,18 +64,18 @@ function svButtonLoadSave(itemId) {
     $('#' + itemId).parents().collapse('show')
     $('#' + itemId).addClass('list-group-item-info')
 
-    $("#serverSelectButton")
-      .html($('#' + itemId).data("svname"))
-      .addClass('btn-outline-light').removeClass('btn-outline-danger');
+    $(".serverSelectButton")
+      .html('<i class="fas fa-server"></i> '+$('#' + itemId).data("svname"))
+      .addClass('btn-secondary').removeClass('btn-danger');
     currentServerConfig = $('#' + itemId).data("svconf");
     svApplyConfig(currentServerConfig);
   } else {
     $("#serverList")
       .find('.collapse').collapse('hide')
       .find('.lgserver').removeClass('list-group-item-info');
-    $("#serverSelectButton")
+    $(".serverSelectButton")
       .html("Please Select Server")
-      .addClass('btn-outline-danger').removeClass('btn-outline-light');
+      .addClass('btn-danger').removeClass('btn-secondary');
   }
 }
 
@@ -108,16 +108,17 @@ function svButtonTrigger() {
       // Save current server info to local disk
       localStorage.setItem("SelectedServerID",$(this).attr('id'))
       //change button info
-      $("#serverSelectButton").html($(this).data("svname"));
+      //$(".serverSelectButton").html($(this).data("svname"));
       // Apply config
       currentServerConfig = $(this).data("svconf");
       svApplyConfig(currentServerConfig);
 
       //svApplyConfig($(this).data( "svconf" ))
-      $('#serverSelectButton').addClass('btn-outline-light').removeClass('btn-outline-danger');
+      //$('.serverSelectButton').addClass('btn-dark').removeClass('btn-danger');
       $(this)
         .toggleClass('list-group-item-info')
         .toggleClass('');
+      svButtonLoadSave(localStorage.SelectedServerID)
     });
   });
 }
@@ -291,6 +292,6 @@ if (typeof(Storage) !== "undefined") {
   lgServerListLoadAjax("server.json", 0);
 } else {
   // Sorry! No Web Storage support..
-  $('#serverSelectButton').prop('disabled', true);
-  $("#serverSelectButton").html("Sorry! No Web Storage support.");
+  $('.serverSelectButton').prop('disabled', true);
+  $(".serverSelectButton").html("Sorry! No Web Storage support.");
 }

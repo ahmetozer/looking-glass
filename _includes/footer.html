@@ -1,21 +1,24 @@
 <footer class="footer-sc site-header fixed-bottom footer mt-auto py-2">
 
   <div class="row">
-    <div class="col">
-      <a class="align-self-center text-white" href="https://github.com/ahmetozer/looking-glass"> &nbsp;
+    <div class="col d-none d-md-block">
+      <a class="align-self-center text-white lead" href="https://github.com/ahmetozer/looking-glass"> &nbsp;
         &nbsp; &copy; Looking Glass 2017-{{ 'now' | date: "%Y" }}</a>
     </div>
+    <div class="col-5 d-md-none">
+      <div class="input-group-text btn-light ml-3 d-flex justify-content-center"><div class="">Server Location ></div></div>
+    </div>
     <div class="col ">
-      <button type="button" class="btn btn-outline-danger btn-sm" aria-pressed="true" data-toggle="modal"
-        data-target="#serverSelectModal" data-placement="left" title="Select a Server" id="serverSelectButton">Please
-        Select Server</button>
+      <button type="button" class="btn btn-danger serverSelectButton" aria-pressed="true" data-toggle="modal"
+        data-target="#serverSelectModal" data-placement="left" title="Select a Server" ><p class="serverSelectButtonText">Please
+          Select Server</p></button>
     </div>
     {% if site.footer.text  and site.footer.text != nil and site.footer.text != "" %}
     <div class="col d-none d-md-block">
       {% if site.footer.link  and site.footer.link != nil and site.footer.link != "" %}
-      <a href="{{ site.footer.link }}" class="text-white">{{ site.footer.text }}</a>
+      <a href="{{ site.footer.link }}" class="text-white lead">{{ site.footer.text }}</a>
       {% else %}
-      <p class="text-white">{{ site.footer.text }}</p>
+      <p class="text-white lead">{{ site.footer.text }}</p>
       {% endif %}
     </div>
     {% endif %}
