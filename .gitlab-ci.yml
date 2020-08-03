@@ -7,6 +7,6 @@ docker-build-master:
       - /src/start-docker.sh
       - docker login -u "ahmetozer" -p "$dhub"
     script:
-      - docker buildx build --platform linux/amd64,linux/arm64,linux/arm --push -t ahmetozer/looking-glass.
+      - docker buildx build --platform linux/amd64,linux/arm64,linux/arm --push -t ahmetozer/looking-glass .
     only:
       - master
