@@ -278,10 +278,17 @@ function lgServerListLoadAjax(URL, curIndex) {
       })
     },
     error: function (data) {
+      $(".server-list-group").html(JSON.stringify(data));
+      $(".serverSelectButton").html("ERR,Click more info");
       if (data["status"] == 200) {
         console.log('ERROR: ', "Json Parse Error");
+        $("#serverSelectLabel").html("Json Parse Error");
+      } else if (data["status"] == 404) {
+        console.log('ERROR: ', "Json not found");
+        $("#serverSelectLabel").html("Json not found in "+server_json_url);
       } else {
-        console.log('ERROR: ', data);
+        $("#serverSelectLabel").html("Unknown error, for more details please look Developer Console 'F12' ");
+        console.log('Unknown error, here is more details: ', data);
       }
 
     }
@@ -289,7 +296,7 @@ function lgServerListLoadAjax(URL, curIndex) {
 }
 if (typeof(Storage) !== "undefined") {
   // Code for localStorage/sessionStorage.
-  lgServerListLoadAjax("server.json", 0);
+  lgServerListLoadAjax(server_json_url, 0);
 } else {
   // Sorry! No Web Storage support..
   $('.serverSelectButton').prop('disabled', true);
