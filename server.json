@@ -9,7 +9,9 @@
         "tcp": "enabled",
         "IPv6": "enabled",
         "IPv4": "enabled",
-        "curl": "enabled"
+        "curl": "enabled",
+        "mtr": "enabled",
+        "referrers": "lg.ahmetozer.org,noc.ahmetozer.org,lg.ahmet.engineer"
     },
     "Servers": {
         "Netherland": {
@@ -23,9 +25,11 @@
             "Servers": {
                 "Amsterdam1": {
                     "Name": "Amsterdam - 1",
-                    "Description": "Equinix",
+                    "Description": "first location",
                     "Url": "https://looking-glass-controller",
-                    "ASN": "AS12735",
+                    "ASN": "AS65536",
+					"IPV4Address": "203.0.113.2",
+					"IPV6Address": "2001:db8:900d:c0de::2",
                     "ServerConfig": {
                         "whois": "enabled",
                         "webcontrol": "disabled",
@@ -35,6 +39,9 @@
                 "Amsterdam2": {
                     "Name": "Amsterdam - 2",
                     "Description": "Research lab",
+					"IPV4Address": "203.0.113.3",
+					"IPV6Address": "2001:db8:900d:c0de::3",
+					"ASN": "AS64496",
                     "ServerConfig": {
                         "IPv6": "enabled",
                         "IPv4": "disabled"
@@ -48,7 +55,11 @@
             "Description": "Servers in Turkey",
             "Servers": {
                 "Istanbul": {
-                    "Url": "http://looking-glass-controller1"
+                    "Url": "http://looking-glass-controller1",
+					"ASN": "AS64497",
+					"Description": "X Data Center",
+					"IPV4Address": "203.0.113.5",
+					"IPV6Address": "2001:db8:900d:c0de::5"
                 },
                 "Marmaris": {
                     "Name": "Marmaris",
@@ -56,7 +67,7 @@
                     "Servers": {
                         "Marmaris1": {
                             "Name": "Marmaris 1",
-                            "Description": "Turknet LSN",
+                            "Description": "X ISP LSN",
                             "ServerConfig": {
                                 "whois": "enabled",
                                 "nslookup": "enabled",
@@ -69,14 +80,17 @@
                                 "IPv4": "enabled",
                                 "speedtest": "enabled"
                             },
-                            "ASN": "AS12735",
-                            "IPV4Address": "1.1.1.1",
-                            "IPV6Address": "::1.1.1.1",
+                            "ASN": "AS65536",
+                            "IPV4Address": "203.0.113.6",
+                            "IPV6Address": "2001:db8:900d:c0de::6",
                             "Url": "https://demo-server-diffrent-port:2083"
                         },
                         "Marmaris2": {
                             "Name": "Marmaris 2",
                             "Description": "Teredo",
+							"ASN": "AS65537",
+							"IPV4Address": "203.0.113.7",
+                            "IPV6Address": "2001:db8:900d:c0de::7",
                             "Url": "http://looking-glass-controller2"
                         },
                         "Marmaris3": {
@@ -87,41 +101,16 @@
                 }
             }
         },
-        "FlatEarth": {
-            "Description": "This server not available.",
+        "disabledsv": {
+			"Name": "Disabled Server",
+            "Description": "Ipv6 and IPv6 Disabled.",
             "Url": "http://looking-glass-controller1",
+			"ASN": "AS65539",
+			"IPV4Address": "203.0.113.9",
+            "IPV6Address": "2001:db8:900d:c0de::9",
             "ServerConfig": {
                 "IPv6": "disabled",
                 "IPv4": "disabled"
-            }
-        },
-        "TestCountry": {
-            "Name": "Test Country",
-            "Description": "Servers in Test Country",
-            "Servers": {
-                "ISP": {
-                    "Url": "http://looking-glass-controller1",
-                    "ServerConfig": {
-                        "IPv6": "disabled",
-                        "IPv4": "enabled"
-                    }
-                },
-                "Area51": {
-                    "Name": "Area51",
-                    "Description": "DialUP",
-                    "Servers": {
-                        "Marmaris1": {
-                            "Name": "Home",
-                            "Description": "CGN IP",
-                            "Url": "https://example-server/"
-                        },
-                        "Marmaris2": {
-                            "Name": "Work",
-                            "Description": "Cisco Router",
-                            "Url": "http://looking-glass-controller2"
-                        }
-                    }
-                }
             }
         }
     }
