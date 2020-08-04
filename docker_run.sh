@@ -73,6 +73,9 @@ then
     if [ "$webserver" == "yes" ]
     then
         echo "Starting Nginx"
+        if [ ! -d "/run/nginx/" ]; then
+            mkdir -p /run/nginx/
+        fi
         nginx
     fi
 fi
