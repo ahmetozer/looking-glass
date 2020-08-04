@@ -15,19 +15,16 @@ title: Looking Glass
 description: >- 
   Welcome to Example Company's Network Looking Glass. The information provided by and the support of this service are on a best effort basis. These are some of our Servers at main locations within our network. You can inspect our network with this webpage.
 
-# This is your website url. Please a give right url. Assets are use this URL.
-url: "https://lg.ahmetozer.org" 
-#permalink:              /page/:title:output_ext
-permalink:               pretty
 
-# jekyll bind addr
-#host:                 0.0.0.0
+# This is your website url. Please a give right url. Assets are use this URL.
+# Do not add "/" end of the url. It is automatically added.
+#url: "https://lg.ahmetozer.org" 
 
 # Give information about Your company
 company:
-  url:                  https://www.example.com
+  url:                  https://example.com
   name:                 Example Company
-  logo:                 
+  #logo:                 https://examlple.com/logo.png
 
 # This is footer link. You can also just write only text.
 footer:
@@ -52,9 +49,18 @@ navbarLinks:
     link:  "#Link4"
 
 
-# Build settings
+#   Server Json URl is your server list url for this system.
+# /server.json is used by default. You can separate server.json to another website or another directory.
+server-json-url: /server.json
+
+# Some Optional Configurations
+# jekyll bind addr
+#host:                 0.0.0.0
+
+# Build settings, Please do not change
 markdown:               kramdown
 kramdown:
   entity_output: numeric
 plugins:
   - jekyll-sitemap
+permalink:               pretty
