@@ -10,3 +10,20 @@ docker-build-master:
       - docker buildx build --platform linux/amd64,linux/arm64,linux/arm --push -t ahmetozer/looking-glass .
     only:
       - master
+
+pages:
+  image: ahmetozer/jekyll:latest
+  stage: deploy
+  before_script:
+  - apk add curl
+  - curl https://s.ahmetozer.org/config/looking-glass/server.json --output server.json
+  - curl https://s.ahmetozer.org/config/looking-glass/config.yml --output _config.yml
+  - bundle install
+  script:
+  - jekyll build --trace -d public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
