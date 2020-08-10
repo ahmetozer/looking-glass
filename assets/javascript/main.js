@@ -1,5 +1,5 @@
 // Apply IP version reqex to host input.
-function applyIPVersionRegex(value) {
+function applyHostRegex(value) {
   switch (value) {
     case "IPv4":
       $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex)
@@ -12,8 +12,11 @@ function applyIPVersionRegex(value) {
     case "IPvDefault":
       $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex + "|" + ipv6Regex)
       break;
+    case "Whois":
+        $('#hostname').attr('pattern', domainRegex + "|" + ipv4Regex + "|" + ipv6Regex + "|" + asnRegex)
+      break;
     default:
-      console.log("applyIPVersionRegex: Unexpected value")
+      console.log("applyHostRegex: Unexpected value")
   }
 }
 
@@ -41,10 +44,16 @@ function autoSelectOptions() {
 function hasARequirement() {
   $(".hasARequirement").find("option:selected").each(function () {
     if ($(this).attr("hasIPVersion") == "yes") {
-      applyIPVersionRegex($("#IPVersion").show().val())
+      applyHostRegex($("#IPVersion").show().val())
     } else {
       $("#IPVersion").hide();
-      applyIPVersionRegex("IPvDefault")
+      switch($(this).attr("hasIPVersion")) {
+        case "Whois":
+          applyHostRegex("Whois")
+          break;
+        default:
+          applyHostRegex("IPvDefault")
+      }
     }
     if ($(this).attr("hasreqScheme") == "yes") {
       $("#reqScheme").show();
@@ -125,7 +134,7 @@ $(document).ready(function () {
 
 
   $("#IPVersion").change(function () {
-    applyIPVersionRegex($(this).val())
+    applyHostRegex($(this).val())
   }).change();
 
   $("#funcFrame").on("load", function () {
