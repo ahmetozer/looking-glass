@@ -173,8 +173,6 @@ This configuration it also has a nested configs. You can define settings at main
 
 It is your function configs. You can enable or disable functions globally by top of the json.
 
-Web site and Net Tools Service is uses this same this config.
-
 Every function is disabled by default for security. If you want to enable it you have to define globally, by list or by server to enable it.
 
 System also recursive config replacement support. You can re define ServerConfig in Lists or servers.
@@ -211,29 +209,6 @@ For example you want to enable tracert functions globally but disable in One cou
 
 Configuration scheme work logic is depth based. System start looks config at top of the config and compare by dept until reach server object.
 
-**NOTE :** Please do not forget to define `"referrers"` in server.json.
-You can define multiple websites, which is uses same json on net-tools-service with comma in one string.
-
-```json
-{
-    "ServerConfig": {
-       "curl": "enabled",
-        "mtr": "enabled",
-        "referrers": "lg.ahmetozer.org,noc.ahmetozer.org,lg.ahmet.engineer"
-    }
-}
-```
-
-```json
-{
-    "ServerConfig": {
-       "curl": "enabled",
-        "mtr": "enabled",
-        "referrers": "lg.ahmetozer.org"
-    }
-}
-```
-
 #### Server List
 
 It's like a server object except it does not have URL object has a again server object.
@@ -250,7 +225,7 @@ If you want to display description on right side of server select modal, you can
 "Servers": {
         "Turkey": {
             "Name": "Türkiye",
-            "Description": "Araştırma ve test sunucuları",
+            "Description": "Research and Test Servers",
             "ServerConfig": {
                 "whois": "disabled",
                 "webcontrol": "disabled",
