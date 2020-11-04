@@ -268,6 +268,7 @@ function lgServerListLoadAjax(URL, curIndex) {
     url: URL,
     dataType: 'json',
     success: function (data) {
+      hostFromURL()
       localStorage.setItem("server_js", JSON.stringify(data));
       lgServerListLoad(data["Servers"], svConfigComparisor(default_server_config["ServerConfig"], data["ServerConfig"]), ["serverList"]);
       // After getting server data, start button services.

@@ -63,6 +63,14 @@ function hasARequirement() {
   });
 }
 
+//readHostname varible from url
+function hostFromURL() {
+  let hostname = new URL(window.location.href).searchParams.get("hostname");
+  if (hostname != undefined && hostname != null && hostname != '') {
+      $('#hostname').val(hostname)
+  }
+}
+
 
 // Is mobile ?
 function isMobile() {
